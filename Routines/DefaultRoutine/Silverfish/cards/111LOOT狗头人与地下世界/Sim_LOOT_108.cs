@@ -14,7 +14,7 @@ namespace HREngine.Bots
         {
             p.equipWeapon(weapon, ownplay);
             int cardDemands = Math.Max(0, 4 - p.owncards.Count);
-            if (ownplay) p.evaluatePenality -= cardDemands * 20;
+            if (ownplay) p.evaluatePenalty -= cardDemands * 20;
         }
 
         public override void onTurnEndsTrigger(Playfield p, Minion triggerEffectMinion, bool turnEndOfOwner)

@@ -17,7 +17,7 @@ namespace HREngine.Bots
             {
                 p.callKid(target.handcard.card, pos, ownplay);
                 temp[pos].setMinionToMinion(target);
-                p.ownMinions[pos].Angr = 1;
+                p.ownMinions[pos].Attack = 1;
                 p.ownMinions[pos].Hp = 1;
                 p.ownMinions[pos].maxHp = 1;
             }

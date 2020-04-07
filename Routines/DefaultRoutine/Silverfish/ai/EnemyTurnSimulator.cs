@@ -48,7 +48,7 @@
                     if (posmoves[0].wehaveCounterspell > 1)
                     {
                         posmoves[0].ownSecretsIDList.Remove(CardDB.cardIDEnum.EX1_287);
-                        posmoves[0].evaluatePenality -= 7;
+                        posmoves[0].evaluatePenalty -= 7;
                     }
                     float newval = Ai.Instance.botBase.getPlayfieldValue(posmoves[0]);
                     posmoves[0].value = int.MinValue;
@@ -75,11 +75,11 @@
                 //play ability!
                 if (rootfield.enemyHeroPowerCostLessOnce <= 0 && posmoves[0].enemyAbilityReady && enemMana >= rootfield.enemyHeroAblility.manacost && posmoves[0].enemyHeroAblility.card.canplayCard(posmoves[0], 0, false) && !rootfield.loatheb)
                 {
-                    int abilityPenality = 0;
+                    int abilityPenalty = 0;
                     List<Minion> trgts = posmoves[0].enemyHeroAblility.card.getTargetsForHeroPower(posmoves[0], false);
                     foreach (Minion trgt in trgts)
                     {
-                        Action a = new Action(actionEnum.useHeroPower, posmoves[0].enemyHeroAblility, null, 0, trgt, abilityPenality, 0);
+                        Action a = new Action(actionEnum.useHeroPower, posmoves[0].enemyHeroAblility, null, 0, trgt, abilityPenalty, 0);
                         Playfield pf = new Playfield(posmoves[0]);
                         pf.doAction(a);
                         posmoves.Add(pf);
@@ -361,7 +361,7 @@
                             Minion target = new Minion();
                             foreach (Minion mnn in p.ownMinions)
                             {
-                                if (mnn.Hp <= 6 && (mnn.Hp + mnn.Angr) > (target.Hp + target.Angr)) target = mnn;
+                                if (mnn.Hp <= 6 && (mnn.Hp + mnn.Attack) > (target.Hp + target.Attack)) target = mnn;
                             }
                             p.minionGetDamageOrHeal(target, 6);
                         }
@@ -478,7 +478,7 @@
                         if (p.enemyMinions.Count >= 3) p.minionGetArmor(p.enemyHero, 1);
                         continue;
                     case CardDB.cardName.gahzrilla:
-                        if (m.Hp >= 4 && p.enemyAnzCards >= 3) p.minionGetBuffed(m, m.Angr * 2, 0);
+                        if (m.Hp >= 4 && p.enemyAnzCards >= 3) p.minionGetBuffed(m, m.Attack * 2, 0);
                         continue;
                     case CardDB.cardName.acolyteofpain:
                         if (m.Hp >= 3 && p.enemyAnzCards >= 3) p.drawACard(CardDB.cardName.unknown, false);

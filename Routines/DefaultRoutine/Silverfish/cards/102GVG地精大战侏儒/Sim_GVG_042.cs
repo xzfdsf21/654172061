@@ -14,7 +14,7 @@ namespace HREngine.Bots
             {
                 p.drawACard(CardDB.cardName.murlocraider, m.own, true);
             }
-            if (m.own) p.ueberladung += 3;
+            if (m.own) p.overload += 3;
         }
     }
 }

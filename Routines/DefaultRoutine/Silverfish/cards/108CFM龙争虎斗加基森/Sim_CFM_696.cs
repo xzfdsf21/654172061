@@ -15,7 +15,7 @@ namespace HREngine.Bots
             {
                 p.minionTransform(m, p.getRandomCardForManaMinion(m.handcard.card.cost - 1));
             }
-            if (p.enemyMinions.Count == 0) p.evaluatePenality += 500;
+            if (p.enemyMinions.Count == 0) p.evaluatePenalty += 500;
         }
     }
 }

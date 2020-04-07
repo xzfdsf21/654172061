@@ -11,7 +11,7 @@ namespace HREngine.Bots
         public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice)
         {
 
-            if (p.ueberladung > 0)
+            if (p.overload > 0)
 
             {
                 p.minionGetDamageOrHeal(target, 5);

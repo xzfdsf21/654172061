@@ -10,7 +10,7 @@ namespace HREngine.Bots
 
         public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice)
         {
-            if (own.own) p.ueberladung += 3;
+            if (own.own) p.overload += 3;
         }
     }
 }

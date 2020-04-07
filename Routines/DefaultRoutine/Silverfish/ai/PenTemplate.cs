@@ -22,9 +22,9 @@
             return 0;
         }
 
-        public int getValueOfMinion(int Angr, int HP, bool isTaunt = false)
+        public int getValueOfMinion(int Attack, int HP, bool isTaunt = false)
         {
-            return this.enemyMinionBaseValue + this.enemyMinionAttackFactor * Angr + this.enemyMinionHPFactor * HP;
+            return this.enemyMinionBaseValue + this.enemyMinionAttackFactor * Attack + this.enemyMinionHPFactor * HP;
         }
 
 

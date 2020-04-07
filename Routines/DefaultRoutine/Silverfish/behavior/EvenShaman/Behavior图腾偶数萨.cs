@@ -8,7 +8,7 @@ namespace HREngine.Bots
         public override string BehaviorName() { return "图腾偶数萨"; }
 
 
-        PenalityManager penman = PenalityManager.Instance;
+        PenaltyManager penman = PenaltyManager.Instance;
 
         public override float getPlayfieldValue(Playfield p)
         {
@@ -26,7 +26,7 @@ namespace HREngine.Bots
             if (p.enemyHeroName == HeroEnum.warlock) aggroboarder = 22;
             if (p.enemyHeroName == HeroEnum.hunter) aggroboarder = 10;
 
-            retval -= p.evaluatePenality;
+            retval -= p.evaluatePenalty;
             retval += p.owncards.Count * 3;
             retval -= 5 * p.manaTurnEnd;
 
@@ -49,15 +49,15 @@ namespace HREngine.Bots
                 retval += 4 * (aggroboarder + 1 - p.enemyHero.Hp - p.enemyHero.armor);
             }
 
-            if (p.ownWeapon.Angr > 0)
+            if (p.ownWeapon.Attack > 0)
             {
-                if (p.ownWeapon.Angr > 1) retval += p.ownWeapon.Angr * p.ownWeapon.Durability;
-                else retval += p.ownWeapon.Angr * p.ownWeapon.Durability + 1;
+                if (p.ownWeapon.Attack > 1) retval += p.ownWeapon.Attack * p.ownWeapon.Durability;
+                else retval += p.ownWeapon.Attack * p.ownWeapon.Durability + 1;
             }
 
             if (!p.enemyHero.frozen)
             {
-                retval -= p.enemyWeapon.Durability * p.enemyWeapon.Angr;
+                retval -= p.enemyWeapon.Durability * p.enemyWeapon.Attack;
             }
             else
             {
@@ -92,8 +92,8 @@ namespace HREngine.Bots
             {
                 retval += 5;
                 retval += m.Hp * 2;
-                retval += m.Angr * 2;
-                if (!m.playedThisTurn && m.windfury) retval += m.Angr;
+                retval += m.Attack * 2;
+                if (!m.playedThisTurn && m.windfury) retval += m.Attack;
                 if (m.divineshild) retval += 1;
                 if (m.stealth) retval += 1;
                 if (m.handcard.card.isSpecialMinion && !m.silenced)
@@ -102,27 +102,27 @@ namespace HREngine.Bots
                 }
                 else
                 {
-                    if (m.Angr <= 2 && m.Hp <= 2 && !m.divineshild) retval -= 5;
+                    if (m.Attack <= 2 && m.Hp <= 2 && !m.divineshild) retval -= 5;
                 }
                 //if (!m.taunt && m.stealth && penman.specialMinions.ContainsKey(m.name)) retval += 20;
                 //if (m.poisonous) retval += 1;
-                if (m.lifesteal) retval += m.Angr / 2;
+                if (m.lifesteal) retval += m.Attack / 2;
                 if (m.divineshild && m.taunt) retval += 4;
                 //if (m.taunt && m.handcard.card.name == CardDB.cardName.frog) owntaunt++;
-                //if (m.handcard.card.isToken && m.Angr <= 2 && m.Hp <= 2) retval -= 5;
-                //if (!penman.specialMinions.ContainsKey(m.name) && m.Angr <= 2 && m.Hp <= 2) retval -= 5;
+                //if (m.handcard.card.isToken && m.Attack <= 2 && m.Hp <= 2) retval -= 5;
+                //if (!penman.specialMinions.ContainsKey(m.name) && m.Attack <= 2 && m.Hp <= 2) retval -= 5;
                 if (p.ownMinions.Count > 2 && (m.handcard.card.name == CardDB.cardName.direwolfalpha || m.handcard.card.name == CardDB.cardName.flametonguetotem || m.handcard.card.name == CardDB.cardName.stormwindchampion || m.handcard.card.name == CardDB.cardName.raidleader)) retval += 10;
                 if (m.handcard.card.name == CardDB.cardName.bloodmagethalnos) retval += 10;
                 if (m.handcard.card.name == CardDB.cardName.nerubianegg)
                 {
-                    if (m.Angr >= 1) retval += 2;
-                    if ((!m.taunt && m.Angr == 0) && (m.divineshild || m.maxHp > 2)) retval -= 10;
+                    if (m.Attack >= 1) retval += 2;
+                    if ((!m.taunt && m.Attack == 0) && (m.divineshild || m.maxHp > 2)) retval -= 10;
                 }
                 if (m.Ready) readycount++;
-                if (m.Hp <= 4 && (m.Angr > 2 || m.Hp > 3)) ownMinionsCount++;
+                if (m.Hp <= 4 && (m.Attack > 2 || m.Hp > 3)) ownMinionsCount++;
                 retval += m.synergy;
             }
-            retval += p.anzOwnExtraAngrHp - p.anzEnemyExtraAngrHp;
+            retval += p.anzOwnExtraAttackHp - p.anzEnemyExtraAttackHp;
 
             /*if (p.enemyMinions.Count >= 0)
             {
@@ -273,21 +273,21 @@ namespace HREngine.Bots
             retval += m.Hp * 2;
             if (!m.frozen && !(m.cantAttack && m.name != CardDB.cardName.argentwatchman))
             {
-                retval += m.Angr * 2;
-                if (m.windfury) retval += m.Angr * 2;
-                if (m.Angr >= 4) retval += 10;
-                if (m.Angr >= 7) retval += 50;
+                retval += m.Attack * 2;
+                if (m.windfury) retval += m.Attack * 2;
+                if (m.Attack >= 4) retval += 10;
+                if (m.Attack >= 7) retval += 50;
             }
 
             if (!m.handcard.card.isSpecialMinion)
             {
-                if (m.Angr == 0) retval -= 7;
-                else if (m.Angr <= 2 && m.Hp <= 2 && !m.divineshild) retval -= 5;
+                if (m.Attack == 0) retval -= 7;
+                else if (m.Attack <= 2 && m.Hp <= 2 && !m.divineshild) retval -= 5;
             }
             else retval += m.handcard.card.rarity;
 
             if (m.taunt) retval += 5;
-            if (m.divineshild) retval += m.Angr;
+            if (m.divineshild) retval += m.Attack;
             if (m.divineshild && m.taunt) retval += 5;
             if (m.stealth) retval += 1;
 
@@ -296,13 +296,13 @@ namespace HREngine.Bots
                 retval += 4;
                 if (p.ownMinions.Count < p.enemyMinions.Count) retval += 10;
             }
-            if (m.lifesteal) retval += m.Angr;
+            if (m.lifesteal) retval += m.Attack;
 
             if (m.handcard.card.targetPriority >= 1 && !m.silenced)
             {
                 retval += m.handcard.card.targetPriority;
             }
-            if (m.name == CardDB.cardName.nerubianegg && m.Angr <= 3 && !m.taunt) retval = 0;
+            if (m.name == CardDB.cardName.nerubianegg && m.Attack <= 3 && !m.taunt) retval = 0;
             if ((TAG_RACE)m.handcard.card.race == TAG_RACE.TOTEM) retval += 2;//内战解图腾
             if (p.enemyHeroStartClass == TAG_CLASS.PALADIN && p.enemyHeroAblility.card.cardIDenum == CardDB.cardIDEnum.AT_132_PALADIN) retval += 2;//打奇数骑解场癌
             retval += m.synergy;

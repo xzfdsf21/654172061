@@ -13,13 +13,13 @@ namespace HREngine.Bots
             foreach (Minion m in p.ownMinions)
             {
                 if (m.entitiyID == own.entitiyID) continue;
-                p.minionSetAngrToX(m, 3);
+                p.minionSetAttackToX(m, 3);
                 p.minionSetLifetoX(m, 3);
             }
             foreach (Minion m in p.enemyMinions)
             {
                 if (m.entitiyID == own.entitiyID) continue;
-                p.minionSetAngrToX(m, 3);
+                p.minionSetAttackToX(m, 3);
                 p.minionSetLifetoX(m, 3);
             }
         }

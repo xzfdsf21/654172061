@@ -12,7 +12,7 @@ namespace HREngine.Bots
         {
             Weapon w = ownplay ? p.ownWeapon : p.enemyWeapon;
 
-            p.minionGetDamageOrHeal(target, w.Angr);
+            p.minionGetDamageOrHeal(target, w.Attack);
             if (w.poisonous) p.minionGetDestroyed(target);
 
             p.lowerWeaponDurability(1000, ownplay);

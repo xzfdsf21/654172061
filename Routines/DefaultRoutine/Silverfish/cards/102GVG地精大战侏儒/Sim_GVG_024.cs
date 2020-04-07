@@ -22,12 +22,12 @@ namespace HREngine.Bots
                 {
                     if (ownplay)
                     {
-                        p.ownWeapon.Angr += 2;
+                        p.ownWeapon.Attack += 2;
                         p.minionGetBuffed(p.ownHero, 2, 0);
                     }
                     else
                     {
-                        p.enemyWeapon.Angr += 2;
+                        p.enemyWeapon.Attack += 2;
                         p.minionGetBuffed(p.enemyHero, 2, 0);
                     }
                     break;
@@ -48,12 +48,12 @@ namespace HREngine.Bots
 
                 if (triggerEffectMinion.own)
                 {
-                    p.ownWeapon.Angr += 2;
+                    p.ownWeapon.Attack += 2;
                     p.minionGetBuffed(p.ownHero, 2, 0);
                 }
                 else
                 {
-                    p.enemyWeapon.Angr += 2;
+                    p.enemyWeapon.Attack += 2;
                     p.minionGetBuffed(p.enemyHero, 2, 0);
                 }
             }
@@ -79,12 +79,12 @@ namespace HREngine.Bots
                 {
                     if (m.own)
                     {
-                        p.ownWeapon.Angr -= 2;
+                        p.ownWeapon.Attack -= 2;
                         p.minionGetBuffed(p.ownHero, -2, 0);
                     }
                     else
                     {
-                        p.enemyWeapon.Angr -= 2;
+                        p.enemyWeapon.Attack -= 2;
                         p.minionGetBuffed(p.enemyHero, -2, 0);
                     }
                 }

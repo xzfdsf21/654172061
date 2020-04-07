@@ -10,7 +10,7 @@ namespace HREngine.Bots
 
         public override void onCardIsGoingToBePlayed(Playfield p, Handmanager.Handcard hc, bool ownplay, Minion m)
         {
-            if (hc.card.Secret) p.evaluatePenality -= 9;
+            if (hc.card.Secret) p.evaluatePenalty -= 9;
         }
 
     }

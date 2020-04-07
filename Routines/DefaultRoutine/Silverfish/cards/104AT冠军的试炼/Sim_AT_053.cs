@@ -12,7 +12,7 @@ namespace HREngine.Bots
         {
             p.drawACard(CardDB.cardIDEnum.None, ownplay);
             p.drawACard(CardDB.cardIDEnum.None, ownplay);
-            if (ownplay) p.ueberladung += 2;
+            if (ownplay) p.overload += 2;
         }
     }
 }

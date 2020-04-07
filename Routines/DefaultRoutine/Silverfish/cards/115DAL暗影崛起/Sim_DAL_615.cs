@@ -23,7 +23,7 @@ namespace HREngine.Bots
                     }
                     else
                     {
-                        p.evaluatePenality += 100;
+                        p.evaluatePenalty += 100;
                     }
                 }
                 else
@@ -33,7 +33,7 @@ namespace HREngine.Bots
             }
             else
             {
-                p.evaluatePenality += 50;
+                p.evaluatePenalty += 50;
             }
         }
     }

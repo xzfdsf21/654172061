@@ -14,7 +14,7 @@ namespace HREngine.Bots
         {
             int pos = (ownplay) ? p.ownMinions.Count : p.enemyMinions.Count;
             p.callKid(kid, pos, ownplay, false);
-            p.evaluatePenality -= 15;
+            p.evaluatePenalty -= 15;
         }
     }
 }

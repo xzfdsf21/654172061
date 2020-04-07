@@ -10,8 +10,8 @@ namespace HREngine.Bots
 
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            if (ownplay) p.evaluatePenality -= p.ownDeckSize;
-            else p.evaluatePenality += p.enemyDeckSize;
+            if (ownplay) p.evaluatePenalty -= p.ownDeckSize;
+            else p.evaluatePenalty += p.enemyDeckSize;
         }
     }
 }

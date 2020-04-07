@@ -16,8 +16,8 @@ namespace HREngine.Bots
                 if (p.ownWeapon.name == CardDB.cardName.runeblade && p.anzOwnHorsemen < 1)
                 {
                     int bonus = (p.ownWeapon.card.cardIDenum == CardDB.cardIDEnum.NAX9_05H) ? 6 : 3;
-                    p.minionGetBuffed(p.ownHero, -1 * Math.Min(bonus, p.ownWeapon.Angr - 1), 0);
-                    p.ownWeapon.Angr = Math.Min(1, p.ownWeapon.Angr - bonus);
+                    p.minionGetBuffed(p.ownHero, -1 * Math.Min(bonus, p.ownWeapon.Attack - 1), 0);
+                    p.ownWeapon.Attack = Math.Min(1, p.ownWeapon.Attack - bonus);
                 }
                 p.anzOwnHorsemen++;
             }
@@ -27,8 +27,8 @@ namespace HREngine.Bots
                 if (p.enemyWeapon.name == CardDB.cardName.runeblade && p.anzEnemyHorsemen < 1)
                 {
                     int bonus = (p.enemyWeapon.card.cardIDenum == CardDB.cardIDEnum.NAX9_05H) ? 6 : 3;
-                    p.minionGetBuffed(p.enemyHero, -1 * Math.Min(bonus, p.enemyWeapon.Angr - 1), 0);
-                    p.enemyWeapon.Angr = Math.Min(1, p.enemyWeapon.Angr - bonus);
+                    p.minionGetBuffed(p.enemyHero, -1 * Math.Min(bonus, p.enemyWeapon.Attack - 1), 0);
+                    p.enemyWeapon.Attack = Math.Min(1, p.enemyWeapon.Attack - bonus);
                 }
                 p.anzEnemyHorsemen++;
             }
@@ -46,7 +46,7 @@ namespace HREngine.Bots
                     {
                         int bonus = (p.ownWeapon.card.cardIDenum == CardDB.cardIDEnum.NAX9_05H) ? 6 : 3;
                         p.minionGetBuffed(p.ownHero, bonus, 0);
-                        p.ownWeapon.Angr += bonus;
+                        p.ownWeapon.Attack += bonus;
                     }
                 }
             }
@@ -60,7 +60,7 @@ namespace HREngine.Bots
                     {
                         int bonus = (p.enemyWeapon.card.cardIDenum == CardDB.cardIDEnum.NAX9_05H) ? 6 : 3;
                         p.minionGetBuffed(p.enemyHero, bonus, 0);
-                        p.enemyWeapon.Angr += bonus;
+                        p.enemyWeapon.Attack += bonus;
                     }
                 }
             }

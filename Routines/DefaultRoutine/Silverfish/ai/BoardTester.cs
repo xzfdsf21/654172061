@@ -50,7 +50,7 @@
         int lockedMana = 0;
 
         int anzOgOwnCThunHpBonus = 0;
-        int anzOgOwnCThunAngrBonus = 0;
+        int anzOgOwnCThunAttackBonus = 0;
         int anzOgOwnCThunTaunt = 0;
         int anzOwnJadeGolem = 0;
         int anzEnemyJadeGolem = 0;
@@ -353,7 +353,7 @@
                 if (s.StartsWith("cthunbonus: "))
                 {
                     String[] ss = s.Split(' ');
-                    anzOgOwnCThunAngrBonus = Convert.ToInt32(ss[1]);
+                    anzOgOwnCThunAttackBonus = Convert.ToInt32(ss[1]);
                     anzOgOwnCThunHpBonus = Convert.ToInt32(ss[2]);
                     anzOgOwnCThunTaunt = Convert.ToInt32(ss[3]);
                 }
@@ -543,7 +543,7 @@
                         }
                         else ownWeapon.equip(CardDB.Instance.getCardDataFromID(CardDB.Instance.cardIdstringToEnum(w[3])));
                     }
-                    ownWeapon.Angr = Convert.ToInt32(w[1]);
+                    ownWeapon.Attack = Convert.ToInt32(w[1]);
                     ownWeapon.Durability = Convert.ToInt32(w[2]);
                 }
 
@@ -590,7 +590,7 @@
                         }
                         else enemyWeapon.equip(CardDB.Instance.getCardDataFromID(CardDB.Instance.cardIdstringToEnum(w[3])));
                     }
-                    enemyWeapon.Angr = Convert.ToInt32(w[1]);
+                    enemyWeapon.Attack = Convert.ToInt32(w[1]);
                     enemyWeapon.Durability = Convert.ToInt32(w[2]);
                 }
                 if (readstate == 2 && counter == 3) // ability
@@ -709,7 +709,7 @@
                         tempminion.own = true;
                         tempminion.entitiyID = ent;
                         tempminion.handcard.entity = ent;
-                        tempminion.Angr = attack;
+                        tempminion.Attack = attack;
                         tempminion.Hp = hp;
                         tempminion.maxHp = maxhp;
                         tempminion.Ready = ready;
@@ -737,7 +737,7 @@
 
                         tempminion.charge = chrg;
                         tempminion.hChoice = hChoice;
-                        tempminion.AdjacentAngr = adjadmg;
+                        tempminion.AdjacentAttack = adjadmg;
                         tempminion.tempAttack = tmpdmg;
                         tempminion.spellpower = spllpwr;
 
@@ -864,7 +864,7 @@
                         tempminion.own = false;
                         tempminion.entitiyID = ent;
                         tempminion.handcard.entity = ent;
-                        tempminion.Angr = attack;
+                        tempminion.Attack = attack;
                         tempminion.Hp = hp;
                         tempminion.maxHp = maxhp;
                         tempminion.Ready = ready;
@@ -892,7 +892,7 @@
 
                         tempminion.charge = chrg;
                         tempminion.hChoice = hChoice;
-                        tempminion.AdjacentAngr = adjadmg;
+                        tempminion.AdjacentAttack = adjadmg;
                         tempminion.tempAttack = tmpdmg;
                         tempminion.spellpower = spllpwr;
 
@@ -1030,7 +1030,7 @@
             Hrtprozis.Instance.updateTurnInfo(this.gTurn, this.gTurnStep);
             Hrtprozis.Instance.updatePlayer(this.maxmana, this.mana, this.cardsPlayedThisTurn, this.numMinionsPlayedThisTurn, this.numOptionPlayedThisTurn, this.overload, this.lockedMana, ownHEntity, enemyHEntity);
             Hrtprozis.Instance.updateSecretStuff(this.ownsecretlist, enemySecretAmount);
-            Hrtprozis.Instance.updateCThunInfo(this.anzOgOwnCThunAngrBonus, this.anzOgOwnCThunHpBonus, this.anzOgOwnCThunTaunt);
+            Hrtprozis.Instance.updateCThunInfo(this.anzOgOwnCThunAttackBonus, this.anzOgOwnCThunHpBonus, this.anzOgOwnCThunTaunt);
             Hrtprozis.Instance.updateJadeGolemsInfo(this.anzOwnJadeGolem, this.anzEnemyJadeGolem);
             Hrtprozis.Instance.updateInvokedInfo(this.OwnInvoke, this.EnemyInvoke);
             Hrtprozis.Instance.updateElementals(this.anzOwnElementalsThisTurn, this.anzOwnElementalsLastTurn, this.ownElementalsHaveLifesteal);
@@ -1056,7 +1056,7 @@
             this.ownHero.cardClass = heroNametoClass(this.ownheroname);
             this.enemyHero.cardClass = heroNametoClass(this.enemyheroname);
 
-            this.ownHero.Angr = ownHeroAttack;
+            this.ownHero.Attack = ownHeroAttack;
             this.ownHero.Hp = ownherohp;
             this.ownHero.armor = ownherodefence;
             this.ownHero.frozen = ownHeroFrozen;
@@ -1066,7 +1066,7 @@
             this.ownHero.windfury = herowindfury;
             this.ownHero.stealth = ownHeroStealth;
 
-            this.enemyHero.Angr = enemyWeapon.Angr;
+            this.enemyHero.Attack = enemyWeapon.Attack;
             this.enemyHero.Hp = enemyherohp;
             this.enemyHero.frozen = enemyFrozen;
             this.enemyHero.armor = enemyherodefence;
@@ -1108,7 +1108,7 @@
                 handcard = new Handmanager.Handcard(hc),
                 zonepos = zonepos,
                 entitiyID = hc.entity,
-                Angr = hc.card.Attack,
+                Attack = hc.card.Attack,
                 Hp = hc.card.Health,
                 maxHp = hc.card.Health,
                 name = hc.card.name,
@@ -1129,15 +1129,15 @@
             m.lifesteal = hc.card.lifesteal;
             m.stealth = hc.card.Stealth;
 
-            if (own) m.synergy = PenalityManager.Instance.getClassRacePriorityPenality(heroNametoClass(this.ownheroname), (TAG_RACE)hc.card.race);
-            else m.synergy = PenalityManager.Instance.getClassRacePriorityPenality(heroNametoClass(this.enemyheroname), (TAG_RACE)hc.card.race);
+            if (own) m.synergy = PenaltyManager.Instance.getClassRacePriorityPenalty(heroNametoClass(this.ownheroname), (TAG_RACE)hc.card.race);
+            else m.synergy = PenaltyManager.Instance.getClassRacePriorityPenalty(heroNametoClass(this.enemyheroname), (TAG_RACE)hc.card.race);
             if (m.synergy > 0 && hc.card.Stealth) m.synergy++;
 
             m.updateReadyness();
 
             if (m.name == CardDB.cardName.lightspawn)
             {
-                m.Angr = m.Hp;
+                m.Attack = m.Hp;
             }
             return m;
         }

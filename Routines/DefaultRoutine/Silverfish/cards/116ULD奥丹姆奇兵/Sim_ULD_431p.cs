@@ -14,7 +14,7 @@ namespace HREngine.Bots
             {
                 p.callKid(target.handcard.card, pos, ownplay);
                 temp[pos].setMinionToMinion(target);
-                p.minionSetAngrToX(target, 2);
+                p.minionSetAttackToX(target, 2);
                 p.minionSetLifetoX(target, 2);
             }
         }

@@ -19,8 +19,8 @@ namespace HREngine.Bots
         {
             if (m.own == own)
             {
-                if (own) p.ownWeapon.Angr++;
-                else p.enemyWeapon.Angr++;
+                if (own) p.ownWeapon.Attack++;
+                else p.enemyWeapon.Attack++;
             }
         }
     }

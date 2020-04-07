@@ -569,7 +569,7 @@ namespace HREngine.Bots
                     {
                         foreach (Minion m in targets)
                         {
-                            if (m.Angr > this.needWithMaxAttackValueOf)
+                            if (m.Attack > this.needWithMaxAttackValueOf)
                             {
                                 m.extraParam = true;
                             }
@@ -581,7 +581,7 @@ namespace HREngine.Bots
                     {
                         foreach (Minion m in targets)
                         {
-                            if (m.Angr < this.needWithMinAttackValueOf)
+                            if (m.Attack < this.needWithMinAttackValueOf)
                             {
                                 m.extraParam = true;
                             }
@@ -920,7 +920,7 @@ namespace HREngine.Bots
                         retval = offset;
                         break;
                     case CardDB.cardName.dreadcorsair:
-                        retval = retval + offset - p.ownWeapon.Angr;
+                        retval = retval + offset - p.ownWeapon.Attack;
                         break;
                     case CardDB.cardName.volcanicdrake:
                         retval = retval + offset - p.ownMinionsDiedTurn - p.enemyMinionsDiedTurn;
@@ -947,7 +947,7 @@ namespace HREngine.Bots
                         retval = retval + offset - p.spellsplayedSinceRecalc;
                         break;
                     case CardDB.cardName.snowfurygiant:
-                        retval = retval + offset - p.ueberladung;
+                        retval = retval + offset - p.overload;
                         break;
                     case CardDB.cardName.kabalcrystalrunner:
                         retval = retval + offset - 2 * p.secretsplayedSinceRecalc;
@@ -1130,7 +1130,7 @@ namespace HREngine.Bots
                         retval = retval + offset - p.ownMinionsDiedTurn - p.enemyMinionsDiedTurn;
                         break;
                     case CardDB.cardName.dreadcorsair:
-                        retval = retval + offset - p.ownWeapon.Angr + p.ownWeaponAttackStarted; // if weapon attack change we change manacost
+                        retval = retval + offset - p.ownWeapon.Attack + p.ownWeaponAttackStarted; // if weapon attack change we change manacost
                         break;
                     case CardDB.cardName.seagiant:
                         retval = retval + offset - p.ownMinions.Count - p.enemyMinions.Count + p.ownMobsCountStarted + p.enemyMobsCountStarted;
@@ -1151,7 +1151,7 @@ namespace HREngine.Bots
                         retval = retval + offset - p.spellsplayedSinceRecalc;
                         break;
                     case CardDB.cardName.snowfurygiant:
-                        retval = retval + offset - p.ueberladung;
+                        retval = retval + offset - p.overload;
                         break;
                     case CardDB.cardName.kabalcrystalrunner:
                         retval = retval + offset - 2 * p.secretsplayedSinceRecalc;
@@ -1548,7 +1548,7 @@ namespace HREngine.Bots
 
         private void setAdditionalData()
         {
-            PenalityManager pen = PenalityManager.Instance;
+            PenaltyManager pen = PenaltyManager.Instance;
 
             foreach (Card c in this.cardlist)
             {

@@ -8,7 +8,7 @@ namespace HREngine.Bots
         {
             int dmg = (ownplay) ? p.getSpellDamageDamage(1) : p.getEnemySpellDamageDamage(1);
             p.allMinionsGetDamage(dmg);
-            if (ownplay) p.ueberladung += 2;
+            if (ownplay) p.overload += 2;
         }
 
     }

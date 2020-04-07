@@ -16,7 +16,7 @@ namespace HREngine.Bots
             {
                 if (own.own)
                 {
-                    if (p.ownMaxMana > 8) p.evaluatePenality += 15;
+                    if (p.ownMaxMana > 8) p.evaluatePenalty += 15;
                     p.ownMaxMana = Math.Min(10, p.ownMaxMana + 1);
                 }
                 else p.enemyMaxMana = Math.Min(10, p.enemyMaxMana + 1);

@@ -13,7 +13,7 @@ namespace HREngine.Bots
             int bonus = 0;
             if (own.own) bonus = -5 * p.owncards.Count;
             else bonus = 5 * p.enemyAnzCards;
-            p.evaluatePenality += bonus;
+            p.evaluatePenalty += bonus;
         }
     }
 }

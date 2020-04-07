@@ -9,7 +9,7 @@ namespace HREngine.Bots
             p.drawACard(CardDB.cardName.unknown, own.own, true);
             if (own.own)
             {
-                p.ueberladung += 1;
+                p.overload += 1;
             }
         }
 

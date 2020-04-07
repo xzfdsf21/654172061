@@ -20,17 +20,17 @@ namespace HREngine.Bots
             return "None";
         }
 
-        public virtual int getPlayCardPenality(CardDB.Card card, Minion target, Playfield p)
+        public virtual int getPlayCardPenalty(CardDB.Card card, Minion target, Playfield p)
         {
             return 0;
         }
 
-        public virtual int getAttackWithHeroPenality(Minion target, Playfield p)
+        public virtual int getAttackWithHeroPenalty(Minion target, Playfield p)
         {
             return 0;
         }
 
-        public virtual int getAttackWithMininonPenality(Minion m, Playfield p, Minion target)
+        public virtual int getAttackWithMininonPenalty(Minion m, Playfield p, Minion target)
         {
             return 0;
         }

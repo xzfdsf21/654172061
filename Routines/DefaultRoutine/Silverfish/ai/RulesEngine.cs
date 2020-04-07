@@ -1701,28 +1701,28 @@ namespace HREngine.Bots
                     if (p.mana < cond.num) return true;
                     return false;
                 case param.owa_equal:
-                    if (p.ownWeapon.Angr == cond.num) return true;
+                    if (p.ownWeapon.Attack == cond.num) return true;
                     return false;
                 case param.owa_notequal:
-                    if (p.ownWeapon.Angr != cond.num) return true;
+                    if (p.ownWeapon.Attack != cond.num) return true;
                     return false;
                 case param.owa_greater:
-                    if (p.ownWeapon.Angr > cond.num) return true;
+                    if (p.ownWeapon.Attack > cond.num) return true;
                     return false;
                 case param.owa_less:
-                    if (p.ownWeapon.Angr < cond.num) return true;
+                    if (p.ownWeapon.Attack < cond.num) return true;
                     return false;
                 case param.ewa_equal:
-                    if (p.enemyWeapon.Angr == cond.num) return true;
+                    if (p.enemyWeapon.Attack == cond.num) return true;
                     return false;
                 case param.ewa_notequal:
-                    if (p.enemyWeapon.Angr != cond.num) return true;
+                    if (p.enemyWeapon.Attack != cond.num) return true;
                     return false;
                 case param.ewa_greater:
-                    if (p.enemyWeapon.Angr > cond.num) return true;
+                    if (p.enemyWeapon.Attack > cond.num) return true;
                     return false;
                 case param.ewa_less:
-                    if (p.enemyWeapon.Angr < cond.num) return true;
+                    if (p.enemyWeapon.Attack < cond.num) return true;
                     return false;
                 case param.owd_equal:
                     if (p.ownWeapon.Durability == cond.num) return true;
@@ -2100,16 +2100,16 @@ namespace HREngine.Bots
                     if (tmp_counter < cond.num) return true;
                     return false;
                 case param.aAt_equal:
-                    if (a.own != null && a.own.Angr == cond.num) return true;
+                    if (a.own != null && a.own.Attack == cond.num) return true;
                     return false;
                 case param.aAt_notequal:
-                    if (a.own != null && a.own.Angr != cond.num) return true;
+                    if (a.own != null && a.own.Attack != cond.num) return true;
                     return false;
                 case param.aAt_greater:
-                    if (a.own != null && a.own.Angr > cond.num) return true;
+                    if (a.own != null && a.own.Attack > cond.num) return true;
                     return false;
                 case param.aAt_less:
-                    if (a.own != null && a.own.Angr < cond.num) return true;
+                    if (a.own != null && a.own.Attack < cond.num) return true;
                     return false;
                 case param.aHp_equal:
                     if (a.own != null && a.prevHpOwn == cond.num) return true;
@@ -2124,16 +2124,16 @@ namespace HREngine.Bots
                     if (a.own != null && a.prevHpOwn < cond.num) return true;
                     return false;
                 case param.tAt_equal:
-                    if (a.target != null && a.target.Angr == cond.num) return true;
+                    if (a.target != null && a.target.Attack == cond.num) return true;
                     return false;
                 case param.tAt_notequal:
-                    if (a.target != null && a.target.Angr != cond.num) return true;
+                    if (a.target != null && a.target.Attack != cond.num) return true;
                     return false;
                 case param.tAt_greater:
-                    if (a.target != null && a.target.Angr > cond.num) return true;
+                    if (a.target != null && a.target.Attack > cond.num) return true;
                     return false;
                 case param.tAt_less:
-                    if (a.target != null && a.target.Angr < cond.num) return true;
+                    if (a.target != null && a.target.Attack < cond.num) return true;
                     return false;
                 case param.tHp_equal:
                     if (a.target != null && a.prevHpTarget == cond.num) return true;
@@ -2681,16 +2681,16 @@ namespace HREngine.Bots
                     if (p.gTurn < cond.num) return true;
                     return false;
                 case param.overload_equal:
-                    if (p.ueberladung == cond.num) return true;
+                    if (p.overload == cond.num) return true;
                     return false;
                 case param.overload_notequal:
-                    if (p.ueberladung != cond.num) return true;
+                    if (p.overload != cond.num) return true;
                     return false;
                 case param.overload_greater:
-                    if (p.ueberladung > cond.num) return true;
+                    if (p.overload > cond.num) return true;
                     return false;
                 case param.overload_less:
-                    if (p.ueberladung < cond.num) return true;
+                    if (p.overload < cond.num) return true;
                     return false;
                 case param.owncarddraw_equal:
                     if (p.owncarddraw == cond.num) return true;

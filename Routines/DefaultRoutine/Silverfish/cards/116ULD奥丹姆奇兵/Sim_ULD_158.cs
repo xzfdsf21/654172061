@@ -7,7 +7,7 @@ namespace HREngine.Bots
 		public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice)
 		{
 			p.allMinionOfASideGetDamage(!own.own, 1);
-			if (own.own) p.ueberladung++;
+			if (own.own) p.overload++;
 		}
 
 	}

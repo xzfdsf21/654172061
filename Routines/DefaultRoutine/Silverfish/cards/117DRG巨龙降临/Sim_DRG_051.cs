@@ -6,7 +6,7 @@ namespace HREngine.Bots
         //<b>支线任务：</b>消耗10点法力值用于随从牌上。<b>奖励：</b>从你的牌库中召唤一个随从。
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            p.evaluatePenality -= 30;
+            p.evaluatePenalty -= 30;
         }
 
     }

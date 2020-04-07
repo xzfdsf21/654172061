@@ -4,7 +4,7 @@
 
     public class Movegenerator
     {
-        PenalityManager pen = PenalityManager.Instance;
+        PenaltyManager pen = PenaltyManager.Instance;
 
         private static Movegenerator instance;
 
@@ -20,7 +20,7 @@
         {
         }
 
-        public List<Action> getMoveList(Playfield p, bool usePenalityManager, bool useCutingTargets, bool own)
+        public List<Action> getMoveList(Playfield p, bool usePenaltyManager, bool useCutingTargets, bool own)
         {
             //generates only own moves
             List<Action> ret = new List<Action>();
@@ -81,14 +81,14 @@
                         trgts = c.getTargetsForCard(p, p.isLethalCheck, true);
                         if (trgts.Count == 0) continue;
 
-                        int cardplayPenality = 0;
+                        int cardplayPenalty = 0;
                         int bestplace = p.getBestPlace(c.type == CardDB.cardtype.MOB ? c : hc.card, p.isLethalCheck);
                         foreach (Minion trgt in trgts)
                         {
-                            if (usePenalityManager) cardplayPenality = pen.getPlayCardPenality(c, trgt, p);
-                            if (cardplayPenality <= 499)
+                            if (usePenaltyManager) cardplayPenalty = pen.getPlayCardPenalty(c, trgt, p);
+                            if (cardplayPenalty <= 499)
                             {
-                                Action a = new Action(actionEnum.playcard, hc, null, bestplace, trgt, cardplayPenality, choice);
+                                Action a = new Action(actionEnum.playcard, hc, null, bestplace, trgt, cardplayPenalty, choice);
                                 ret.Add(a);
                             }
                         }
@@ -105,33 +105,33 @@
             List<Minion> attackingMinions = new List<Minion>(8);
             foreach (Minion m in (own ? p.ownMinions : p.enemyMinions))
             {
-                if (m.Ready && m.Angr >= 1 && !m.frozen) attackingMinions.Add(m); //* add non-attacing minions
+                if (m.Ready && m.Attack >= 1 && !m.frozen) attackingMinions.Add(m); //* add non-attacing minions
             }
             attackingMinions = this.cutAttackList(attackingMinions);
 
             foreach (Minion m in attackingMinions)
             {
-                int attackPenality = 0;
+                int attackPenalty = 0;
                 foreach (Minion trgt in trgts)
                 {
                     if (m.cantAttackHeroes && trgt.isHero) continue;
-                    if (usePenalityManager) attackPenality = pen.getAttackWithMininonPenality(m, p, trgt);
-                    if (attackPenality <= 499)
+                    if (usePenaltyManager) attackPenalty = pen.getAttackWithMinionPenalty(m, p, trgt);
+                    if (attackPenalty <= 499)
                     {
-                        Action a = new Action(actionEnum.attackWithMinion, null, m, 0, trgt, attackPenality, 0);
+                        Action a = new Action(actionEnum.attackWithMinion, null, m, 0, trgt, attackPenalty, 0);
                         ret.Add(a);
                     }
                 }
             }
 
             // attack with hero (weapon)
-            if ((own && p.ownHero.Ready && p.ownHero.Angr >= 1) || (!own && p.enemyHero.Ready && p.enemyHero.Angr >= 1))
+            if ((own && p.ownHero.Ready && p.ownHero.Attack >= 1) || (!own && p.enemyHero.Ready && p.enemyHero.Attack >= 1))
             {
                 int heroAttackPen = 0;
                 foreach (Minion trgt in trgts)
                 {
                     if ((own ? p.ownWeapon.cantAttackHeroes : p.enemyWeapon.cantAttackHeroes) && trgt.isHero) continue;
-                    if (usePenalityManager) heroAttackPen = pen.getAttackWithHeroPenality(trgt, p);
+                    if (usePenaltyManager) heroAttackPen = pen.getAttackWithHeroPenalty(trgt, p);
                     if (heroAttackPen <= 499)
                     {
                         Action a = new Action(actionEnum.attackWithHero, null, (own ? p.ownHero : p.enemyHero), 0, trgt, heroAttackPen, 0);
@@ -155,15 +155,15 @@
                         {
                             c = pen.getChooseCard(p.ownHeroAblility.card, choice); // do all choice
                         }
-                        int cardplayPenality = 0;
+                        int cardplayPenalty = 0;
                         int bestplace = p.ownMinions.Count + 1; //we can not manage it
                         trgts = p.ownHeroAblility.card.getTargetsForHeroPower(p, true);
                         foreach (Minion trgt in trgts)
                         {
-                            if (usePenalityManager) cardplayPenality = pen.getPlayCardPenality(p.ownHeroAblility.card, trgt, p);
-                            if (cardplayPenality <= 499)
+                            if (usePenaltyManager) cardplayPenalty = pen.getPlayCardPenalty(p.ownHeroAblility.card, trgt, p);
+                            if (cardplayPenalty <= 499)
                             {
-                                Action a = new Action(actionEnum.useHeroPower, p.ownHeroAblility, null, bestplace, trgt, cardplayPenality, choice);
+                                Action a = new Action(actionEnum.useHeroPower, p.ownHeroAblility, null, bestplace, trgt, cardplayPenalty, choice);
                                 ret.Add(a);
                             }
                         }
@@ -198,7 +198,7 @@
                     bool onlyNotSpecial = (!isSpecial || (isSpecial && m.silenced)) && (!otherisSpecial || (otherisSpecial && mnn.silenced));
 
                     if (onlySpecial && (m.name != mnn.name)) continue; // different name -> take it
-                    if ((onlySpecial || onlyNotSpecial) && (mnn.Angr == m.Angr && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal && m.handcard.card.isToken == mnn.handcard.card.isToken && mnn.handcard.card.race == m.handcard.card.race))
+                    if ((onlySpecial || onlyNotSpecial) && (mnn.Attack == m.Attack && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal && m.handcard.card.isToken == mnn.handcard.card.isToken && mnn.handcard.card.race == m.handcard.card.race))
                     {
                         goingtoadd = false;
                         break;
@@ -242,7 +242,7 @@
             int strongestAttack = 0;
             foreach (Minion m in enemym)
             {
-                if (m.Angr > strongestAttack) strongestAttack = m.Angr;
+                if (m.Attack > strongestAttack) strongestAttack = m.Attack;
                 if (m.taunt) return true;
                 if (m.name == CardDB.cardName.dancingswords || m.name == CardDB.cardName.deathlord) return true;
             }
@@ -255,9 +255,9 @@
             {
                 if (m.name == CardDB.cardName.cultmaster) return true;
                 if (m.name == CardDB.cardName.knifejuggler) hasJuggler = true;
-                if (m.Ready && m.Angr >= 1)
+                if (m.Ready && m.Attack >= 1)
                 {
-                    if (m.AdjacentAngr >= 1) return true;//wolphalfa or flametongue is in play
+                    if (m.AdjacentAttack >= 1) return true;//wolphalfa or flametongue is in play
                     if (m.name == CardDB.cardName.northshirecleric) return true;
                     if (m.name == CardDB.cardName.armorsmith) return true;
                     if (m.name == CardDB.cardName.loothoarder) return true;

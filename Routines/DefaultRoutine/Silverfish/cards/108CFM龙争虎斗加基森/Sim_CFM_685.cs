@@ -17,7 +17,7 @@ namespace HREngine.Bots
                 {
                     hc.addattack += 5;
                     hc.addHp += 5;
-                    p.anzOwnExtraAngrHp += 10;
+                    p.anzOwnExtraAttackHp += 10;
                 }
             }
         }

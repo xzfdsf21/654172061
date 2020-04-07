@@ -14,21 +14,21 @@ namespace HREngine.Bots
                 if (p.enemyDeckSize <= 6)
                 {
                     p.minionGetDamageOrHeal(p.enemyHero, Math.Min(5, p.enemyHero.Hp - 1), true);
-                    p.evaluatePenality -= 1;
+                    p.evaluatePenalty -= 1;
                 }
                 else
                 {
                     if (p.enemyDeckSize <= 16)
                     {
                         p.minionGetDamageOrHeal(p.enemyHero, Math.Min(3, p.enemyHero.Hp - 1), true);
-                        p.evaluatePenality -= 2;
+                        p.evaluatePenalty -= 2;
                     }
                     else
                     {
                         if (p.enemyDeckSize <= 26)
                         {
                             p.minionGetDamageOrHeal(p.enemyHero, Math.Min(1, p.enemyHero.Hp - 1), true);
-                            p.evaluatePenality -= 3;
+                            p.evaluatePenalty -= 3;
                         }
                     }
                 }

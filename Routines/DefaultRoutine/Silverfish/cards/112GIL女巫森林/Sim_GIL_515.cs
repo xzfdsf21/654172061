@@ -8,7 +8,7 @@ namespace HREngine.Bots
         {
             if (target != null)
             {
-                int atkBuff = target.Angr;
+                int atkBuff = target.Attack;
                 int hpBuff = target.Hp;
                 p.minionGetDestroyed(target);
                 p.minionGetBuffed(own, atkBuff, hpBuff);

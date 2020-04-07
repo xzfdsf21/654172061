@@ -9,7 +9,7 @@ namespace HREngine.Bots
         {
             p.allMinionOfASideGetBuffed(ownplay, 1, 1);
 
-            if (ownplay) p.ueberladung += 1;
+            if (ownplay) p.overload += 1;
         }
     }
 }

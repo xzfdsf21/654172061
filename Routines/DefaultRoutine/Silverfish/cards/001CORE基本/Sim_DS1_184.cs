@@ -13,7 +13,7 @@ namespace HREngine.Bots
         {
             //TODO NOT SUPPORTED YET
             p.drawACard(CardDB.cardIDEnum.None, ownplay);
-            //p.evaluatePenality += 100;
+            //p.evaluatePenalty += 100;
         }
 
     }

@@ -27,7 +27,7 @@ namespace HREngine.Bots
                     }
                 }
             }
-            else p.evaluatePenality += 50;
+            else p.evaluatePenalty += 50;
                 
            
         }

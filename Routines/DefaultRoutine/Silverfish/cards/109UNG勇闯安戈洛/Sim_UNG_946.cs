@@ -10,8 +10,8 @@ namespace HREngine.Bots
 
         public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice)
         {
-            int num = p.enemyWeapon.Angr;
-            if (!own.own) num = p.ownWeapon.Angr;
+            int num = p.enemyWeapon.Attack;
+            if (!own.own) num = p.ownWeapon.Attack;
             p.lowerWeaponDurability(1000, !own.own);
             p.minionGetArmor(own.own ? p.ownHero : p.enemyHero, num);
         }

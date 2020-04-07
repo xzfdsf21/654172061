@@ -16,7 +16,7 @@ namespace HREngine.Bots
             {
                 if (p.ownWeapon.Durability > 0)
                 {
-                    p.ownWeapon.Angr++;
+                    p.ownWeapon.Attack++;
                     p.ownWeapon.Durability++;
                     p.minionGetBuffed(p.ownHero, 1, 0);
                 }
@@ -29,7 +29,7 @@ namespace HREngine.Bots
             {
                 if (p.enemyWeapon.Durability > 0)
                 {
-                    p.enemyWeapon.Angr++;
+                    p.enemyWeapon.Attack++;
                     p.enemyWeapon.Durability++;
                     p.minionGetBuffed(p.enemyHero, 1, 0);
                 }

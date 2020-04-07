@@ -12,14 +12,14 @@ namespace HREngine.Bots
         {
             if (m.own)
             {
-                if (p.ownWeapon.Durability > 0 && p.ownWeapon.Angr > 2)
+                if (p.ownWeapon.Durability > 0 && p.ownWeapon.Attack > 2)
                 {
                     p.minionGetBuffed(m, 4, 4);
                 }
             }
             else
             {
-                if (p.enemyWeapon.Durability > 0 && p.enemyWeapon.Angr > 2)
+                if (p.enemyWeapon.Durability > 0 && p.enemyWeapon.Attack > 2)
                 {
                     p.minionGetBuffed(m, 4, 4);
                 }

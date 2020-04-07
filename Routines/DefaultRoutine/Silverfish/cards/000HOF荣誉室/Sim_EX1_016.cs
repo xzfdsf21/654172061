@@ -18,7 +18,7 @@ namespace HREngine.Bots
             else
             {
                 target = p.searchRandomMinion(p.ownMinions, searchmode.searchHighestHP);
-                if (p.isOwnTurn && target != null && target.Ready) p.evaluatePenality += 5;
+                if (p.isOwnTurn && target != null && target.Ready) p.evaluatePenalty += 5;
             }
             if (target != null) p.minionGetControlled(target, m.own, false);
         }

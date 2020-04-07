@@ -10,7 +10,7 @@ namespace HREngine.Bots
 
         public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice)
         {
-            if (own.own) p.ueberladung++;
+            if (own.own) p.overload++;
         }
 
         public override void onMinionDiedTrigger(Playfield p, Minion m, Minion diedMinion)

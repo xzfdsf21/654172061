@@ -12,8 +12,8 @@ namespace HREngine.Bots
         {
             if (own.own)
             {
-                if (p.ownMinions.Count < p.enemyMinions.Count) p.evaluatePenality -= 15;
-                else p.evaluatePenality -= 5;
+                if (p.ownMinions.Count < p.enemyMinions.Count) p.evaluatePenalty -= 15;
+                else p.evaluatePenalty -= 5;
                 foreach (Minion m in p.ownMinions) m.Ready = false;
                 foreach (Minion m in p.enemyMinions) m.frozen = true;
                 p.ownHero.Hp += 7;

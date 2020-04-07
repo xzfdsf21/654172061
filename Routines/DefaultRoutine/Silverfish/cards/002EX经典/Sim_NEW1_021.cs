@@ -17,8 +17,8 @@ namespace HREngine.Bots
                     if (m.entitiyID == triggerEffectMinion.entitiyID) continue;
                     if (m.playedThisTurn || m.playedPrevTurn)
                     {
-                        if (PenalityManager.Instance.ownSummonFromDeathrattle.ContainsKey(m.name)) continue;
-                        p.evaluatePenality += (m.Hp * 2 + m.Angr * 2) * 2;
+                        if (PenaltyManager.Instance.ownSummonFromDeathrattle.ContainsKey(m.name)) continue;
+                        p.evaluatePenalty += (m.Hp * 2 + m.Attack * 2) * 2;
                     }
                 }
                 p.allMinionsGetDestroyed();

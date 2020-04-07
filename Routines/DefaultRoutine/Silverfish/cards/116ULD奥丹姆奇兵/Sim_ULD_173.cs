@@ -8,7 +8,7 @@ namespace HREngine.Bots
         {
             if (m.own)
             {
-                if (p.ueberladung > 0 || p.lockedMana > 0)
+                if (p.overload > 0 || p.lockedMana > 0)
                     p.anzOwnVessina++;
                 foreach (Minion mn in p.ownMinions)
                 {
@@ -17,7 +17,7 @@ namespace HREngine.Bots
             }
             else
             {
-                if (p.ueberladung > 0 || p.lockedMana > 0)
+                if (p.overload > 0 || p.lockedMana > 0)
                     p.anzEnemyVessina++;
                 foreach (Minion mn in p.enemyMinions)
                 {
@@ -29,7 +29,7 @@ namespace HREngine.Bots
         {
             if (m.own)
             {
-                if (p.ueberladung > 0 || p.lockedMana > 0)
+                if (p.overload > 0 || p.lockedMana > 0)
                     p.anzOwnVessina--;
                 foreach (Minion mn in p.ownMinions)
                 {
@@ -38,7 +38,7 @@ namespace HREngine.Bots
             }
             else
             {
-                if (p.ueberladung > 0 || p.lockedMana > 0)
+                if (p.overload > 0 || p.lockedMana > 0)
                     p.anzEnemyVessina--;
                 foreach (Minion mn in p.enemyMinions)
                 {

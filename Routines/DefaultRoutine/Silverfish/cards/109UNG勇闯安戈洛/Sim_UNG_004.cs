@@ -10,7 +10,7 @@ namespace HREngine.Bots
 
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            p.minionSetAngrToX(target, 10);
+            p.minionSetAttackToX(target, 10);
             p.minionSetLifetoX(target, 10);
         }
     }

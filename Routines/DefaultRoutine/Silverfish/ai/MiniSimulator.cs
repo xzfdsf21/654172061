@@ -12,7 +12,7 @@
         private int maxdeep = 6;
         private int maxwide = 10;
         private int totalboards = 50;
-        private bool usePenalityManager = true;
+        private bool usePenaltyManager = true;
         private bool useCutingTargets = true;
         private bool dontRecalc = true;
         private bool useLethalCheck = true;
@@ -48,7 +48,7 @@
 
         Movegenerator movegen = Movegenerator.Instance;
 
-        PenalityManager pen = PenalityManager.Instance;
+        PenaltyManager pen = PenaltyManager.Instance;
 
         public MiniSimulator()
         {
@@ -252,15 +252,15 @@
                 else if (!enoughCalculations)
                 {
                     //gernerate actions and play them!
-                    List<Action> actions = movegen.getMoveList(p, usePenalityManager, useCutingTargets, true);
+                    List<Action> actions = movegen.getMoveList(p, usePenaltyManager, useCutingTargets, true);
 
                     if (printRules > 0) p.endTurnState = new Playfield(p);
                     foreach (Action a in actions)
                     {
                         Playfield pf = new Playfield(p);
                         pf.doAction(a);
-                        pf.evaluatePenality += -pf.ruleWeight + RulesEngine.Instance.getRuleWeight(pf);
-                        if (pf.ownHero.Hp > 0 && pf.evaluatePenality < 500) p.nextPlayfields.Add(pf);
+                        pf.evaluatePenalty += -pf.ruleWeight + RulesEngine.Instance.getRuleWeight(pf);
+                        if (pf.ownHero.Hp > 0 && pf.evaluatePenalty < 500) p.nextPlayfields.Add(pf);
                     }
                 }
 
@@ -373,7 +373,7 @@
                     Int64 hash = p.GetPHash();
                     p.hashcode = hash;
                     if (!tempDict.ContainsKey(hash)) tempDict.Add(hash, p);
-                    else if (p.evaluatePenality < tempDict[hash].evaluatePenality)
+                    else if (p.evaluatePenalty < tempDict[hash].evaluatePenalty)
                     {
                         tempDict[hash] = p;
                     }
@@ -448,7 +448,7 @@
 
                         if ((!isSpecial || (isSpecial && m.silenced)) && (!otherisSpecial || (otherisSpecial && mnn.silenced))) // both are not special, if they are the same, dont add
                         {
-                            if (mnn.Angr == m.Angr && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
+                            if (mnn.Attack == m.Attack && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
                             continue;
                         }
 
@@ -459,7 +459,7 @@
                                 continue;
                             }
                             // same name -> test whether they are equal
-                            if (mnn.Angr == m.Angr && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
+                            if (mnn.Attack == m.Attack && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
                             continue;
                         }
 

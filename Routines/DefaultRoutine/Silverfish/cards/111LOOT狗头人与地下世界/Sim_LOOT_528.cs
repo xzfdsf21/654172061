@@ -25,8 +25,8 @@ namespace HREngine.Bots
                 {
                     if (target == null) return;
 
-                    m.Angr = target.Angr;
-                    target.Angr = m.Angr;
+                    m.Attack = target.Attack;
+                    target.Attack = m.Attack;
                 }
             }
             else
@@ -35,8 +35,8 @@ namespace HREngine.Bots
                 {
                     if (target == null) return;
 
-                    m.Angr = target.Angr;
-                    target.Angr = m.Angr;
+                    m.Attack = target.Attack;
+                    target.Attack = m.Attack;
                 }
             }
         }

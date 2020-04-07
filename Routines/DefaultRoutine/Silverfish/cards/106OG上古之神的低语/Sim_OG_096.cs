@@ -12,8 +12,8 @@ namespace HREngine.Bots
         {
             if (own.own)
             {
-                if (p.anzOgOwnCThunAngrBonus + 6 > 9) p.minionGetDamageOrHeal(p.ownHero, -p.getMinionHeal(10));
-                else p.evaluatePenality += 6;
+                if (p.anzOgOwnCThunAttackBonus + 6 > 9) p.minionGetDamageOrHeal(p.ownHero, -p.getMinionHeal(10));
+                else p.evaluatePenalty += 6;
             }
         }
     }

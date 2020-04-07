@@ -6,7 +6,7 @@ namespace HREngine.Bots
         //使一个随从的攻击力和生命值互换。
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            p.minionSwapAngrAndHP(target);
+            p.minionSwapAttackAndHP(target);
         }
 
     }

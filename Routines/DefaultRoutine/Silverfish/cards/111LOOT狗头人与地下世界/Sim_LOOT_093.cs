@@ -17,7 +17,7 @@ namespace HREngine.Bots
             p.callKid(kid, pos, ownplay, false);
             p.callKid(kid, pos, ownplay);
             p.callKid(kid, pos, ownplay);
-            if (ownplay) p.evaluatePenality -= 10;
+            if (ownplay) p.evaluatePenalty -= 10;
         }
     }
 }

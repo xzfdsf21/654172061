@@ -29,7 +29,7 @@ namespace HREngine.Bots
                 if (surviving == 0) break;
             }
 
-            if (ownplay) p.ueberladung += 2;
+            if (ownplay) p.overload += 2;
         }
     }
 }

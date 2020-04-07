@@ -12,7 +12,7 @@ namespace HREngine.Bots
         {
             if (m.own) p.minionGetBuffed(m, 2, 0);
             else p.minionGetBuffed(m, 3, 0);
-            if (m.own) p.ueberladung++;
+            if (m.own) p.overload++;
         }
     }
 }

@@ -50,7 +50,7 @@
             public Dictionary<CardDB.cardIDEnum, int> combocardsTurn0Mobs = new Dictionary<CardDB.cardIDEnum, int>();
             public Dictionary<CardDB.cardIDEnum, int> combocardsTurn0All = new Dictionary<CardDB.cardIDEnum, int>();
             public Dictionary<CardDB.cardIDEnum, int> combocardsTurn1 = new Dictionary<CardDB.cardIDEnum, int>();
-            public int penality = 0;
+            public int penalty = 0;
             public int combolength = 0;
             public int combot0len = 0;
             public int combot1len = 0;
@@ -210,8 +210,8 @@
                 /*if (i == 2 && type == combotype.combo)
                 {
                     int m = Convert.ToInt32(ding);
-                    penality = 0;
-                    if (m >= 1) penality = m;
+                    penalty = 0;
+                    if (m >= 1) penalty = m;
                 }
 
                 i++;
@@ -474,7 +474,7 @@
             help.ErrorLog("[连招功能] " + combos.Count + " “连招”功能激活成功, " + playByValue.Count + " 个权重值已加载");
         }
 
-        public int getPenalityForDestroyingCombo(CardDB.Card crd, Playfield p)
+        public int getPenaltyForDestroyingCombo(CardDB.Card crd, Playfield p)
         {
             if (this.combos.Count == 0) return 0;
             int pen = int.MaxValue;

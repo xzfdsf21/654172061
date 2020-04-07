@@ -12,7 +12,7 @@ namespace HREngine.Bots
             {
                 if (p.cardsPlayedThisTurn >= 1)
                 {
-                    p.ownWeapon.Angr += 2;
+                    p.ownWeapon.Attack += 2;
                     p.minionGetBuffed(p.ownHero, 2, 0);
                 }
             }
@@ -20,7 +20,7 @@ namespace HREngine.Bots
             {
                 if (p.cardsPlayedThisTurn >= 1)
                 {
-                    p.enemyWeapon.Angr += 2;
+                    p.enemyWeapon.Attack += 2;
                     p.minionGetBuffed(p.enemyHero, 2, 0);
                 }
             }

@@ -14,7 +14,7 @@ namespace HREngine.Bots
                     {
                         hc.addattack += hc.card.Attack;
                         hc.addHp += hc.card.Health;
-                        p.anzOwnExtraAngrHp += (hc.card.Attack + hc.card.Health);
+                        p.anzOwnExtraAttackHp += (hc.card.Attack + hc.card.Health);
                     }
                 }
             }

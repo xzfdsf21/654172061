@@ -6,7 +6,7 @@ namespace HREngine.Bots
         //<b>支线任务：</b>召唤五个随从。<b>奖励：</b>使你的随从获得+1/+1。
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            if (p.playactions.Count < 2) p.evaluatePenality -= 30;
+            if (p.playactions.Count < 2) p.evaluatePenalty -= 30;
         }
 
     }

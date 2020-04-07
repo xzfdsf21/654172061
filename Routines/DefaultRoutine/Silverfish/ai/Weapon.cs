@@ -13,7 +13,7 @@ namespace HREngine.Bots
         public int numAttacksThisTurn = 0;
         public bool immuneWhileAttacking = false;
 
-        public int Angr = 0;
+        public int Attack = 0;
         public int Durability = 0;
 
         public bool windfury = false;
@@ -34,7 +34,7 @@ namespace HREngine.Bots
             this.numAttacksThisTurn = w.numAttacksThisTurn;
             this.immuneWhileAttacking = w.immuneWhileAttacking;
 
-            this.Angr = w.Angr;
+            this.Attack = w.Attack;
             this.Durability = w.Durability;
 
             this.windfury = w.windfury;
@@ -46,7 +46,7 @@ namespace HREngine.Bots
 
         public bool isEqual(Weapon w)
         {
-            if (this.Angr != w.Angr) return false;
+            if (this.Attack != w.Attack) return false;
             if (this.Durability != w.Durability) return false;
             if (this.poisonous != w.poisonous) return false;
             if (this.lifesteal != w.lifesteal) return false;
@@ -61,7 +61,7 @@ namespace HREngine.Bots
             this.numAttacksThisTurn = 0;
             this.immuneWhileAttacking = c.immuneWhileAttacking;
 
-            this.Angr = c.Attack;
+            this.Attack = c.Attack;
             this.Durability = c.Durability;
 
             this.windfury = c.windfury;
@@ -73,7 +73,7 @@ namespace HREngine.Bots
 
         public string weaponToString()
         {
-            return this.Angr + " " + this.Durability + " " + this.name + " " + this.card.cardIDenum + " " + (this.poisonous ? 1 : 0) + " " + (this.lifesteal ? 1 : 0);
+            return this.Attack + " " + this.Durability + " " + this.name + " " + this.card.cardIDenum + " " + (this.poisonous ? 1 : 0) + " " + (this.lifesteal ? 1 : 0);
         }
 
     }

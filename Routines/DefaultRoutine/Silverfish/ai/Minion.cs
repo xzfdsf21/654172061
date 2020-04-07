@@ -84,8 +84,8 @@ namespace HREngine.Bots
         public int maxHp = 0;
         public int armor = 0;
 
-        public int Angr = 0;
-        public int AdjacentAngr = 0;
+        public int Attack = 0;
+        public int AdjacentAttack = 0;
         public int tempAttack = 0;
         public int justBuffed = 0;
 
@@ -175,8 +175,8 @@ namespace HREngine.Bots
             this.maxHp = m.maxHp;
             this.armor = m.armor;
 
-            this.Angr = m.Angr;
-            this.AdjacentAngr = m.AdjacentAngr;
+            this.Attack = m.Attack;
+            this.AdjacentAttack = m.AdjacentAttack;
             this.tempAttack = m.tempAttack;
             this.justBuffed = m.justBuffed;
 
@@ -261,8 +261,8 @@ namespace HREngine.Bots
             this.maxHp = m.maxHp;
             this.armor = m.armor;
 
-            this.Angr = m.Angr;
-            this.AdjacentAngr = m.AdjacentAngr;
+            this.Attack = m.Attack;
+            this.AdjacentAttack = m.AdjacentAttack;
             this.tempAttack = m.tempAttack;
 
 
@@ -296,7 +296,7 @@ namespace HREngine.Bots
 
         public int getRealAttack()
         {
-            return this.Angr;
+            return this.Attack;
         }
 
         public void getDamageOrHeal(int dmg, Playfield p, bool isMinionAttack, bool dontCalcLostDmg)
@@ -488,7 +488,7 @@ namespace HREngine.Bots
 
             if (this.name == CardDB.cardName.lightspawn && !this.silenced)
             {
-                this.Angr = this.Hp;
+                this.Attack = this.Hp;
             }
 
             if (woundedbefore && !this.wounded)
@@ -650,7 +650,7 @@ namespace HREngine.Bots
             }
 
             //reset attack
-            Angr = handcard.card.Attack;
+            Attack = handcard.card.Attack;
             tempAttack = 0;//we dont toutch the adjacent buffs!
 
 
@@ -688,7 +688,7 @@ namespace HREngine.Bots
 
         public Minion GetTargetForMinionWithSurvival(Playfield p, bool own)
         {
-            if (this.Angr == 0) return null;
+            if (this.Attack == 0) return null;
             if ((own ? p.enemyMinions.Count : p.ownMinions.Count) < 1) return (own ? p.enemyHero : p.ownHero);
             Minion target = new Minion();
             Minion targetTaumt = new Minion();
@@ -696,11 +696,11 @@ namespace HREngine.Bots
             {
                 if (m.taunt && !m.silenced)
                 {
-                    if (this.Hp > m.Hp && (m.Hp + m.Angr + m.Angr * (m.windfury ? 1 : 0)) > (targetTaumt.Hp + targetTaumt.Angr + targetTaumt.Angr * (targetTaumt.windfury ? 1 : 0))) targetTaumt = m;
+                    if (this.Hp > m.Hp && (m.Hp + m.Attack + m.Attack * (m.windfury ? 1 : 0)) > (targetTaumt.Hp + targetTaumt.Attack + targetTaumt.Attack * (targetTaumt.windfury ? 1 : 0))) targetTaumt = m;
                 }
                 else
                 {
-                    if (this.Hp > m.Hp && (m.Hp + m.Angr + m.Angr * (m.windfury ? 1 : 0)) > (target.Hp + target.Angr + target.Angr * (target.windfury ? 1 : 0))) target = m;
+                    if (this.Hp > m.Hp && (m.Hp + m.Attack + m.Attack * (m.windfury ? 1 : 0)) > (target.Hp + target.Attack + target.Attack * (target.windfury ? 1 : 0))) target = m;
                 }
             }
             if (targetTaumt.Hp > 0) return targetTaumt;
@@ -826,8 +826,8 @@ namespace HREngine.Bots
                     case CardDB.cardIDEnum.DS1_178e: this.charge++; continue;
 
                     //adjacentbuffs-------------------------------------------------
-                    case CardDB.cardIDEnum.EX1_565o: this.AdjacentAngr += 2; continue; //flametongue
-                    case CardDB.cardIDEnum.EX1_162o: this.AdjacentAngr += 1; continue; //dire wolf alpha
+                    case CardDB.cardIDEnum.EX1_565o: this.AdjacentAttack += 2; continue; //flametongue
+                    case CardDB.cardIDEnum.EX1_162o: this.AdjacentAttack += 1; continue; //dire wolf alpha
 
                     //tempbuffs-------------------------------------------------
                     case CardDB.cardIDEnum.CS2_083e: this.tempAttack += 1; continue;

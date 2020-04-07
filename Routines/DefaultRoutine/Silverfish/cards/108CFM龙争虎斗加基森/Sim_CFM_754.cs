@@ -19,12 +19,12 @@ namespace HREngine.Bots
                     {
                         hc.addattack += 2;
                         hc.addHp += 2;
-                        p.anzOwnExtraAngrHp += 4;
+                        p.anzOwnExtraAttackHp += 4;
                     }
                 }
                 else
                 {
-                    if (p.enemyAnzCards > 0) p.anzEnemyExtraAngrHp += 4;
+                    if (p.enemyAnzCards > 0) p.anzEnemyExtraAttackHp += 4;
                 }
             }
         }

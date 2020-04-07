@@ -14,12 +14,12 @@ namespace HREngine.Bots
             temp2.Sort((a, b) => a.Hp.CompareTo(b.Hp));//destroys the weakest
             foreach (Minion enemy in temp2)
             {
-                if (enemy.Angr <= 1)
+                if (enemy.Attack <= 1)
                 {
                     p.minionGetDestroyed(enemy);
                     break;
                 }
-                if (own.Angr <= 1)
+                if (own.Attack <= 1)
                 {
                     p.minionGetDestroyed(own);
                     break;

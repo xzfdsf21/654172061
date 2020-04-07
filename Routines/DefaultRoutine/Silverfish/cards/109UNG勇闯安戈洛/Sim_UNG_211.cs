@@ -11,7 +11,7 @@ namespace HREngine.Bots
 
         public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice)
         {
-            if (p.anzOwnElementalsLastTurn > 0 && own.own) p.evaluatePenality -= 12;
+            if (p.anzOwnElementalsLastTurn > 0 && own.own) p.evaluatePenalty -= 12;
         }
     }
 }

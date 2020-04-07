@@ -13,7 +13,7 @@ namespace HREngine.Bots
             int heal = (m.own) ? p.getMinionHeal(6) : p.getEnemyMinionHeal(6);
 
             p.minionGetDamageOrHeal(target, -heal);
-            if (m.own) p.ueberladung++;
+            if (m.own) p.overload++;
         }
     }
 }

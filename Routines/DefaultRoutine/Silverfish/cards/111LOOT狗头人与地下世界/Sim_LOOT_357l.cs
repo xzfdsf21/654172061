@@ -14,8 +14,8 @@ namespace HREngine.Bots
             int cardsCount = (m.own) ? p.enemyAnzCards : p.owncards.Count;
             if (cardsCount > 9)
             {
-                if (m.own) p.evaluatePenality -= 45;
-                else p.evaluatePenality += 45;
+                if (m.own) p.evaluatePenalty -= 45;
+                else p.evaluatePenalty += 45;
             }
 
             p.drawACard(CardDB.cardName.unknown, !m.own);

@@ -15,7 +15,7 @@ namespace HREngine.Bots
             {
                 if (p.ownWeapon.Durability >= 1)
                 {
-                    p.ownWeapon.Angr += 3;
+                    p.ownWeapon.Attack += 3;
                     p.minionGetBuffed(p.ownHero, 3, 0);
                 }
                 if (p.cardsPlayedThisTurn >= 1 && p.ownMinions.Count >= 1)
@@ -32,7 +32,7 @@ namespace HREngine.Bots
             {
                 if (p.enemyWeapon.Durability >= 1)
                 {
-                    p.enemyWeapon.Angr += 3;
+                    p.enemyWeapon.Attack += 3;
                     p.minionGetBuffed(p.enemyHero, 3, 0);
                 }
                 if (p.cardsPlayedThisTurn >= 1 && p.enemyMinions.Count >= 1)

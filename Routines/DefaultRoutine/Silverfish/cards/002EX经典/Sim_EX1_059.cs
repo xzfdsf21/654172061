@@ -10,7 +10,7 @@ namespace HREngine.Bots
 
         public override void getBattlecryEffect(Playfield p, Minion m, Minion target, int choice)
         {
-            if (target != null) p.minionSwapAngrAndHP(target);
+            if (target != null) p.minionSwapAttackAndHP(target);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace HREngine.Bots
                 if (p.spellpower > 0)
                 {
                     p.minionGetBuffed(p.ownHero, 2, 0);
-                    p.ownWeapon.Angr += 2;
+                    p.ownWeapon.Attack += 2;
                     p.ownSpiritclaws = true;
                 }
             }
@@ -27,7 +27,7 @@ namespace HREngine.Bots
                 if (p.enemyspellpower > 0)
                 {
                     p.minionGetBuffed(p.enemyHero, 2, 0);
-                    p.enemyWeapon.Angr += 2;
+                    p.enemyWeapon.Attack += 2;
                     p.enemySpiritclaws = true;
                 }
             }

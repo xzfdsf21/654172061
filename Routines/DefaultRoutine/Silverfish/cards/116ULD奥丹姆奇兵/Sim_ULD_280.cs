@@ -12,8 +12,8 @@ namespace HREngine.Bots
 
             if (temp.Count > 0)
             {
-                if (m.own) temp.Sort((a, b) => b.Angr.CompareTo(a.Angr));
-                else temp.Sort((a, b) => a.Angr.CompareTo(b.Angr));
+                if (m.own) temp.Sort((a, b) => b.Attack.CompareTo(a.Attack));
+                else temp.Sort((a, b) => a.Attack.CompareTo(b.Attack));
                 Minion target = temp[0];
                 if (m.own && temp.Count >= 2 && !target.taunt && temp[1].taunt) target = temp[1];
                 p.minionReturnToHand(target, !m.own, 0);

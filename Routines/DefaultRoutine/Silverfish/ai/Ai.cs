@@ -13,7 +13,7 @@
         public int playaroundprob2 = 80;
         public int maxNumberOfThreads = 100; //don't change manually, because it changes automatically
 
-        private bool usePenalityManager = true;
+        private bool usePenaltyManager = true;
         private bool useCutingTargets = true;
         private bool dontRecalc = true;
         private bool useLethalCheck = true;
@@ -30,7 +30,7 @@
 
         public string currentCalculatedBoard = "1";
 
-        PenalityManager penman = PenalityManager.Instance;
+        PenaltyManager penman = PenaltyManager.Instance;
         Settings settings = Settings.Instance;
 
         List<Playfield> posmoves = new List<Playfield>(7000);
@@ -184,7 +184,7 @@
                 this.bestActions.RemoveAt(0);
             }
             if (this.nextMoveGuess == null) this.nextMoveGuess = new Playfield();
-            else Silverfish.Instance.updateCThunInfo(nextMoveGuess.anzOgOwnCThunAngrBonus, nextMoveGuess.anzOgOwnCThunHpBonus, nextMoveGuess.anzOgOwnCThunTaunt);
+            else Silverfish.Instance.updateCThunInfo(nextMoveGuess.anzOgOwnCThunAttackBonus, nextMoveGuess.anzOgOwnCThunHpBonus, nextMoveGuess.anzOgOwnCThunTaunt);
 
             if (bestmove != null && bestmove.actionType != actionEnum.endturn)  // save the guessed move, so we doesnt need to recalc!
             {
@@ -218,7 +218,7 @@
                 }
                 if (twilightelderBonus > 0)
                 {
-                    Silverfish.Instance.updateCThunInfo(nextMoveGuess.anzOgOwnCThunAngrBonus + twilightelderBonus, nextMoveGuess.anzOgOwnCThunHpBonus + twilightelderBonus, nextMoveGuess.anzOgOwnCThunTaunt);
+                    Silverfish.Instance.updateCThunInfo(nextMoveGuess.anzOgOwnCThunAttackBonus + twilightelderBonus, nextMoveGuess.anzOgOwnCThunHpBonus + twilightelderBonus, nextMoveGuess.anzOgOwnCThunTaunt);
                 }
             }
 

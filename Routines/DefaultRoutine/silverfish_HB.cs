@@ -49,7 +49,7 @@ namespace HREngine.Bots
         private int numOptionPlayedThisTurn = 0;
         private int numMinionsPlayedThisTurn = 0;
         private int cardsPlayedThisTurn = 0;
-        private int ueberladung = 0;
+        private int overload = 0;
         private int lockedMana = 0;
 
         private int enemyMaxMana = 0;
@@ -80,7 +80,7 @@ namespace HREngine.Bots
         private int gTurn = 0;
         private int gTurnStep = 0;
         private int anzOgOwnCThunHpBonus = 0;
-        private int anzOgOwnCThunAngrBonus = 0;
+        private int anzOgOwnCThunAttackBonus = 0;
         private int anzOgOwnCThunTaunt = 0;
         private int ownCrystalCore = 0;
         private bool ownMinionsCost0 = false;
@@ -218,7 +218,7 @@ namespace HREngine.Bots
             gTurn = 0;
             gTurnStep = 0;
             anzOgOwnCThunHpBonus = 0;
-            anzOgOwnCThunAngrBonus = 0;
+            anzOgOwnCThunAttackBonus = 0;
             anzOgOwnCThunTaunt = 0;
             ownCrystalCore = 0;
             ownMinionsCost0 = false;
@@ -303,7 +303,7 @@ namespace HREngine.Bots
             }
 
             Hrtprozis.Instance.updatePlayer(this.ownMaxMana, this.currentMana, this.cardsPlayedThisTurn,
-                this.numMinionsPlayedThisTurn, this.numOptionPlayedThisTurn, this.ueberladung, this.lockedMana, TritonHs.OurHero.EntityId, TritonHs.EnemyHero.EntityId);
+                this.numMinionsPlayedThisTurn, this.numOptionPlayedThisTurn, this.overload, this.lockedMana, TritonHs.OurHero.EntityId, TritonHs.EnemyHero.EntityId);
             Hrtprozis.Instance.updateSecretStuff(this.ownSecretList, this.enemySecretList.Count);
 
             Hrtprozis.Instance.updateHero(this.ownWeapon, this.heroname, this.heroAbility, this.ownAbilityisReady, this.ownHeroPowerCost, this.ownHero);
@@ -320,7 +320,7 @@ namespace HREngine.Bots
 
             Hrtprozis.Instance.updateTurnInfo(this.gTurn, this.gTurnStep);
             updateCThunInfobyCThun();
-            Hrtprozis.Instance.updateCThunInfo(this.anzOgOwnCThunAngrBonus, this.anzOgOwnCThunHpBonus, this.anzOgOwnCThunTaunt);
+            Hrtprozis.Instance.updateCThunInfo(this.anzOgOwnCThunAttackBonus, this.anzOgOwnCThunHpBonus, this.anzOgOwnCThunTaunt);
             Hrtprozis.Instance.updateCrystalCore(this.ownCrystalCore);
             Hrtprozis.Instance.updateOwnMinionsInDeckCost0(this.ownMinionsCost0);
             Probabilitymaker.Instance.setEnemySecretGuesses(this.enemySecretList);
@@ -515,7 +515,7 @@ namespace HREngine.Bots
 
             numMinionsPlayedThisTurn = TritonHs.NumMinionsPlayedThisTurn;
             cardsPlayedThisTurn = TritonHs.NumCardsPlayedThisTurn;
-            ueberladung = TritonHs.OverloadOwed;
+            overload = TritonHs.OverloadOwed;
             lockedMana = TritonHs.OverloadLocked;
 
             this.ownHeroFatigue = ownHeroCard.GetTag(GAME_TAG.FATIGUE);
@@ -531,7 +531,7 @@ namespace HREngine.Bots
 
             this.heroname = Hrtprozis.Instance.heroIDtoName(TritonHs.OurHero.Id);
 
-            this.ownHero.Angr = ownHeroCard.GetTag(GAME_TAG.ATK);
+            this.ownHero.Attack = ownHeroCard.GetTag(GAME_TAG.ATK);
             this.ownHero.Hp = ownHeroCard.GetTag(GAME_TAG.HEALTH) - ownHeroCard.GetTag(GAME_TAG.DAMAGE);
             this.ownHero.armor = ownHeroCard.GetTag(GAME_TAG.ARMOR);
             this.ownHero.frozen = (ownHeroCard.GetTag(GAME_TAG.FROZEN) == 0) ? false : true;
@@ -547,7 +547,7 @@ namespace HREngine.Bots
                 HSCard weapon = TritonHs.OurWeaponCard;
 
                 ownWeapon.equip(CardDB.Instance.getCardDataFromID(CardDB.Instance.cardIdstringToEnum(weapon.Id)));
-                ownWeapon.Angr = weapon.GetTag(GAME_TAG.ATK);
+                ownWeapon.Attack = weapon.GetTag(GAME_TAG.ATK);
                 ownWeapon.Durability = weapon.GetTag(GAME_TAG.DURABILITY) - weapon.GetTag(GAME_TAG.DAMAGE);
                 ownWeapon.poisonous = (weapon.GetTag(GAME_TAG.POISONOUS) == 1) ? true : false;
                 ownWeapon.lifesteal = (weapon.GetTag(GAME_TAG.LIFESTEAL) == 1) ? true : false;
@@ -556,7 +556,7 @@ namespace HREngine.Bots
 
             this.enemyHeroname = Hrtprozis.Instance.heroIDtoName(TritonHs.EnemyHero.Id);
 
-            this.enemyHero.Angr = enemHeroCard.GetTag(GAME_TAG.ATK);
+            this.enemyHero.Attack = enemHeroCard.GetTag(GAME_TAG.ATK);
             this.enemyHero.Hp = enemHeroCard.GetTag(GAME_TAG.HEALTH) - enemHeroCard.GetTag(GAME_TAG.DAMAGE);
             this.enemyHero.armor = enemHeroCard.GetTag(GAME_TAG.ARMOR);
             this.enemyHero.frozen = (enemHeroCard.GetTag(GAME_TAG.FROZEN) == 0) ? false : true;
@@ -570,7 +570,7 @@ namespace HREngine.Bots
                 HSCard weapon = TritonHs.EnemyWeaponCard;
 
                 enemyWeapon.equip(CardDB.Instance.getCardDataFromID(CardDB.Instance.cardIdstringToEnum(weapon.Id)));
-                enemyWeapon.Angr = weapon.GetTag(GAME_TAG.ATK);
+                enemyWeapon.Attack = weapon.GetTag(GAME_TAG.ATK);
                 enemyWeapon.Durability = weapon.GetTag(GAME_TAG.DURABILITY) - weapon.GetTag(GAME_TAG.DAMAGE);
                 enemyWeapon.poisonous = (weapon.GetTag(GAME_TAG.POISONOUS) == 1) ? true : false;
                 enemyWeapon.lifesteal = (weapon.GetTag(GAME_TAG.LIFESTEAL) == 1) ? true : false;
@@ -647,8 +647,8 @@ namespace HREngine.Bots
 
             this.enemyHero.loadEnchantments(miniEnchlist, enemHeroCard.GetTag(GAME_TAG.CONTROLLER));
 
-            if (this.ownHero.Angr < this.ownWeapon.Angr) this.ownHero.Angr = this.ownWeapon.Angr;
-            if (this.enemyHero.Angr < this.enemyWeapon.Angr) this.enemyHero.Angr = this.enemyWeapon.Angr;
+            if (this.ownHero.Attack < this.ownWeapon.Attack) this.ownHero.Attack = this.ownWeapon.Attack;
+            if (this.enemyHero.Attack < this.enemyWeapon.Attack) this.enemyHero.Attack = this.enemyWeapon.Attack;
         }
 
 
@@ -693,7 +693,7 @@ namespace HREngine.Bots
                     m.name = c.name;
                     m.handcard.card = c;
 
-                    m.Angr = entitiy.GetTag(GAME_TAG.ATK);
+                    m.Attack = entitiy.GetTag(GAME_TAG.ATK);
                     m.maxHp = entitiy.GetTag(GAME_TAG.HEALTH);
                     m.Hp = entitiy.GetTag(GAME_TAG.HEALTH) - entitiy.GetTag(GAME_TAG.DAMAGE);
                     if (m.Hp <= 0) continue;
@@ -830,13 +830,13 @@ namespace HREngine.Bots
                     if (entitiy.GetTag(GAME_TAG.CONTROLLER) == this.ownPlayerController)
                     {
                         m.own = true;
-                        m.synergy = PenalityManager.Instance.getClassRacePriorityPenality(this.ownHero.cardClass, (TAG_RACE)c.race);
+                        m.synergy = PenaltyManager.Instance.getClassRacePriorityPenalty(this.ownHero.cardClass, (TAG_RACE)c.race);
                         this.ownMinions.Add(m);
                     }
                     else
                     {
                         m.own = false;
-                        m.synergy = PenalityManager.Instance.getClassRacePriorityPenality(this.enemyHero.cardClass, (TAG_RACE)c.race);
+                        m.synergy = PenaltyManager.Instance.getClassRacePriorityPenalty(this.enemyHero.cardClass, (TAG_RACE)c.race);
                         this.enemyMinions.Add(m);
                     }
                 }
@@ -1120,12 +1120,12 @@ namespace HREngine.Bots
 
         }
 
-        public void updateCThunInfo(int OgOwnCThunAngrBonus, int OgOwnCThunHpBonus, int OgOwnCThunTaunt)
+        public void updateCThunInfo(int OgOwnCThunAttackBonus, int OgOwnCThunHpBonus, int OgOwnCThunTaunt)
         {
-            this.anzOgOwnCThunAngrBonus = OgOwnCThunAngrBonus;
+            this.anzOgOwnCThunAttackBonus = OgOwnCThunAttackBonus;
             this.anzOgOwnCThunHpBonus = OgOwnCThunHpBonus;
             this.anzOgOwnCThunTaunt = OgOwnCThunTaunt;
-            Hrtprozis.Instance.updateCThunInfo(this.anzOgOwnCThunAngrBonus, this.anzOgOwnCThunHpBonus, this.anzOgOwnCThunTaunt);
+            Hrtprozis.Instance.updateCThunInfo(this.anzOgOwnCThunAttackBonus, this.anzOgOwnCThunHpBonus, this.anzOgOwnCThunTaunt);
         }
 
         public void updateCThunInfobyCThun()
@@ -1135,7 +1135,7 @@ namespace HREngine.Bots
             {
                 if (hc.card.name == CardDB.cardName.cthun)
                 {
-                    this.anzOgOwnCThunAngrBonus = hc.addattack;
+                    this.anzOgOwnCThunAttackBonus = hc.addattack;
                     this.anzOgOwnCThunHpBonus = hc.addHp;
                     found = true;
                     break;
@@ -1148,8 +1148,8 @@ namespace HREngine.Bots
                 {
                     if (m.name == CardDB.cardName.cthun)
                     {
-                        if (this.anzOgOwnCThunAngrBonus < m.Angr - 6) this.anzOgOwnCThunAngrBonus = m.Angr - 6;
-                        if (this.anzOgOwnCThunHpBonus < m.Hp - 6) this.anzOgOwnCThunHpBonus = m.Angr - 6;
+                        if (this.anzOgOwnCThunAttackBonus < m.Attack - 6) this.anzOgOwnCThunAttackBonus = m.Attack - 6;
+                        if (this.anzOgOwnCThunHpBonus < m.Hp - 6) this.anzOgOwnCThunHpBonus = m.Attack - 6;
                         if (m.taunt && this.anzOgOwnCThunTaunt < 1) this.anzOgOwnCThunTaunt++;
                         found = true;
                         break;

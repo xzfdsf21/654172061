@@ -10,7 +10,7 @@ namespace HREngine.Bots
         //    setzt den angriff eines dieners auf einen wert, der seinem leben entspricht.
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            p.minionSetAngrToHP(target);
+            p.minionSetAttackToHP(target);
         }
 
     }

@@ -13,7 +13,7 @@ namespace HREngine.Bots
             if (target != null)
             {
                 own.Hp = target.Hp;
-                own.Angr = target.Angr;
+                own.Attack = target.Attack;
             }
         }
     }

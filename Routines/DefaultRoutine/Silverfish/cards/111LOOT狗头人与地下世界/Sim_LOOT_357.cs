@@ -17,8 +17,8 @@ namespace HREngine.Bots
 
             if (pos < 7)
             {
-                if (m.own) p.evaluatePenality -= 40;
-                else p.evaluatePenality += 40;
+                if (m.own) p.evaluatePenalty -= 40;
+                else p.evaluatePenalty += 40;
             }
         }
     }

@@ -116,7 +116,7 @@
     <Compile Include="Routines\DefaultRoutine\Silverfish\ai\MiniSimulatorNextTurn.cs" />
     <Compile Include="Routines\DefaultRoutine\Silverfish\ai\Movegenerator.cs" />
     <Compile Include="Routines\DefaultRoutine\Silverfish\ai\Mulligan.cs" />
-    <Compile Include="Routines\DefaultRoutine\Silverfish\ai\PenalityManager.cs" />
+    <Compile Include="Routines\DefaultRoutine\Silverfish\ai\PenaltyManager.cs" />
     <Compile Include="Routines\DefaultRoutine\Silverfish\ai\PenTemplate.cs" />
     <Compile Include="Routines\DefaultRoutine\Silverfish\ai\Playfield.cs" />
     <Compile Include="Routines\DefaultRoutine\Silverfish\ai\Probabilitymaker.cs" />

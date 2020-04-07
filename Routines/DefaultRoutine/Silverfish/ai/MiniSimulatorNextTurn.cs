@@ -12,7 +12,7 @@
 
         public int thread = 0;
 
-        private bool usePenalityManager = true;
+        private bool usePenaltyManager = true;
         private bool useCutingTargets = true;
         private bool dontRecalc = true;
         private bool useLethalCheck = true;
@@ -82,7 +82,7 @@
                         continue;
                     }
 
-                    List<Action> actions = movegen.getMoveList(p, usePenalityManager, useCutingTargets, true);
+                    List<Action> actions = movegen.getMoveList(p, usePenaltyManager, useCutingTargets, true);
                     foreach (Action a in actions)
                     {
                         havedonesomething = true;
@@ -231,7 +231,7 @@
 
                         if ((!isSpecial || (isSpecial && m.silenced)) && (!otherisSpecial || (otherisSpecial && mnn.silenced))) // both are not special, if they are the same, dont add
                         {
-                            if (mnn.Angr == m.Angr && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
+                            if (mnn.Attack == m.Attack && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
                             continue;
                         }
 
@@ -242,7 +242,7 @@
                                 continue;
                             }
                             // same name -> test whether they are equal
-                            if (mnn.Angr == m.Angr && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
+                            if (mnn.Attack == m.Attack && mnn.Hp == m.Hp && mnn.divineshild == m.divineshild && mnn.taunt == m.taunt && mnn.poisonous == m.poisonous && mnn.lifesteal == m.lifesteal) goingtoadd = false;
                             continue;
                         }
 

@@ -6,7 +6,7 @@ namespace HREngine.Bots
         //<b>支线任务：</b>用你的英雄攻击两次。<b>奖励：</b>将三张“爪击”法术牌置入你的手牌。
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            if (p.playactions.Count < 2) p.evaluatePenality -= 30;
+            if (p.playactions.Count < 2) p.evaluatePenalty -= 30;
         }
 
     }

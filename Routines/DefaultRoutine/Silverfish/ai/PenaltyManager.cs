@@ -4,10 +4,10 @@
     using System.Linq;
     using System.Collections.Generic;
 
-    public class PenalityManager
+    public class PenaltyManager
     {
         //todo acolyteofpain
-        //todo better aoe-penality
+        //todo better aoe-penalty
 
         public Dictionary<CardDB.cardName, int> HealTargetDatabase = new Dictionary<CardDB.cardName, int>();
         Dictionary<CardDB.cardName, int> HealHeroDatabase = new Dictionary<CardDB.cardName, int>();
@@ -80,13 +80,13 @@
         CardDB cdb;
         Ai ai;
 
-        private static PenalityManager instance;
+        private static PenaltyManager instance;
 
-        public static PenalityManager Instance
+        public static PenaltyManager Instance
         {
             get
             {
-                return instance ?? (instance = new PenalityManager());
+                return instance ?? (instance = new PenaltyManager());
             }
         }
 
@@ -99,7 +99,7 @@
             cdb = CardDB.Instance;
         }
 
-        private PenalityManager()
+        private PenaltyManager()
         {
             setupHealDatabase();
             setupEnrageDatabase();
@@ -130,12 +130,12 @@
         }
 
 
-        public int getAttackWithMininonPenality(Minion m, Playfield p, Minion target)//随从攻击惩罚
+        public int getAttackWithMinionPenalty(Minion m, Playfield p, Minion target)//随从攻击惩罚
         {
-            int retval = ai.botBase.getAttackWithMininonPenality(m, p, target);
+            int retval = ai.botBase.getAttackWithMininonPenalty(m, p, target);
             if (retval < 0 || retval > 499) return retval;
 
-            retval += getAttackSecretPenality(m, p, target);
+            retval += getAttackSecretPenalty(m, p, target);
             if (!p.isLethalCheck && m.name == CardDB.cardName.bloodimp) retval += 50;//鲜血小鬼除非斩杀不打人
             switch (m.name)
             {
@@ -147,7 +147,7 @@
                     {
                         if (!target.taunt)
                         {
-                            if (m.Hp <= target.Angr && m.own && !m.divineshild && !m.immune) return 65;
+                            if (m.Hp <= target.Attack && m.own && !m.divineshild && !m.immune) return 65;
                         }
                     }
                     goto case CardDB.cardName.aiextra1;
@@ -155,7 +155,7 @@
                 //    if (target.isHero && !target.own) return -10;
                 //    break;
                 case CardDB.cardName.bombwrangler:
-                    if (m.own && target.Angr < m.Hp) return -10;
+                    if (m.own && target.Attack < m.Hp) return -10;
                     break;
                 case CardDB.cardName.acolyteofpain: goto case CardDB.cardName.aiextra1;
                 case CardDB.cardName.clockworkgnome: goto case CardDB.cardName.aiextra1;
@@ -167,7 +167,7 @@
                 case CardDB.cardName.webspinner: goto case CardDB.cardName.aiextra1;
                 case CardDB.cardName.aiextra1:
 
-                    if (m.Hp <= target.Angr && m.own && !m.divineshild && !m.immune)
+                    if (m.Hp <= target.Attack && m.own && !m.divineshild && !m.immune)
                     {
                         int carddraw = 1;
                         if (p.owncards.Count + carddraw > 10) retval += 15 * (p.owncards.Count + carddraw - 10);
@@ -176,20 +176,20 @@
                     return retval;
                     break;
             }
-            if (this.specialMinions.ContainsKey(m.name) && target.Hp > m.Angr && !target.isHero) retval++;
-            if (this.UsefulNeedKeepDatabase.ContainsKey(m.name) && !target.isHero && !(m.divineshild || target.Angr == 0)) retval++;
+            if (this.specialMinions.ContainsKey(m.name) && target.Hp > m.Attack && !target.isHero) retval++;
+            if (this.UsefulNeedKeepDatabase.ContainsKey(m.name) && !target.isHero && !(m.divineshild || target.Attack == 0)) retval++;
             if (m.justBuffed > 0)
             {
                 if (m.divineshild || m.immune) { }
-                else if (target.poisonous || target.Angr >= m.Hp) retval += m.justBuffed;
+                else if (target.poisonous || target.Attack >= m.Hp) retval += m.justBuffed;
             }
             return retval;
         }
 
-        public int getAttackWithHeroPenality(Minion target, Playfield p)//英雄攻击惩罚
+        public int getAttackWithHeroPenalty(Minion target, Playfield p)//英雄攻击惩罚
         {
             bool isLethalCheck = p.isLethalCheck;
-            int retval = ai.botBase.getAttackWithHeroPenality(target, p);
+            int retval = ai.botBase.getAttackWithHeroPenalty(target, p);
             if (retval < 0 || retval > 499) return retval;
 
             if (!isLethalCheck && target.isHero && target.Hp > settings.enfacehp)
@@ -197,7 +197,7 @@
                 switch (settings.weaponOnlyAttackMobsUntilEnfacehp)
                 {
                     case 1:
-                        if (p.ownWeapon.Durability == 1 && p.ownWeapon.Angr > 1) return 500;
+                        if (p.ownWeapon.Durability == 1 && p.ownWeapon.Attack > 1) return 500;
                         break;
                     case 2:
                         return 500;
@@ -209,11 +209,11 @@
                         break;
                     case 5:
                         int wAttack = weaponInHandAttackNextTurn(p);
-                        if (wAttack > 1 || (wAttack == 1 && p.ownWeapon.Angr == 1)) { }
+                        if (wAttack > 1 || (wAttack == 1 && p.ownWeapon.Attack == 1)) { }
                         else return 500;
                         break;
                     default:
-                        if (p.ownWeapon.Angr > 1) return 500;
+                        if (p.ownWeapon.Attack > 1) return 500;
                         break;
                 }
             }
@@ -243,7 +243,7 @@
                     {
                         foreach (Handmanager.Handcard hc in p.owncards)
                         {
-                            if (hc.card.name == CardDB.cardName.arcaneshot || hc.card.name == CardDB.cardName.killcommand) return -p.ownWeapon.Angr - 1;
+                            if (hc.card.name == CardDB.cardName.arcaneshot || hc.card.name == CardDB.cardName.killcommand) return -p.ownWeapon.Attack - 1;
                         }
                         if (p.ownSecretsIDList.Count >= 1) return 20;
 
@@ -254,7 +254,7 @@
                     }
                     break;
                 case CardDB.cardName.spiritclaws:
-                    if (!isLethalCheck && p.ownWeapon.Angr == 1)
+                    if (!isLethalCheck && p.ownWeapon.Attack == 1)
                     {
                         if (target.isHero) return 500;
                         else if (target.Hp == 1 && this.specialMinions.ContainsKey(target.name)) return 0;
@@ -262,7 +262,7 @@
                     }
                     break;
                 case CardDB.cardName.likkim:
-                    if (!isLethalCheck && p.ownWeapon.Angr == 1)
+                    if (!isLethalCheck && p.ownWeapon.Attack == 1)
                     {
                         if (target.isHero) return 500;
                         else if (target.Hp == 1 && this.specialMinions.ContainsKey(target.name)) return 0;
@@ -270,7 +270,7 @@
                     }
                     break;
                 case CardDB.cardName.gorehowl:
-                    if (target.isHero && p.ownWeapon.Angr >= 3) return 10;
+                    if (target.isHero && p.ownWeapon.Attack >= 3) return 10;
                     break;
                 case CardDB.cardName.brassknuckles:
                     if (target.own)
@@ -290,10 +290,10 @@
             if (p.ownWeapon.Durability >= 1)
             {
                 int wAttack = weaponInHandAttackNextTurn(p);
-                if (p.ownWeapon.Angr == 1 && wAttack == 0 && (p.ownHeroAblility.card.name == CardDB.cardName.poisoneddaggers || p.ownHeroAblility.card.name == CardDB.cardName.daggermastery)) wAttack = 1;
-                if (wAttack > 0) retval = -p.ownWeapon.Angr - 1; // so he doesnt "lose" the weapon in evaluation :D
+                if (p.ownWeapon.Attack == 1 && wAttack == 0 && (p.ownHeroAblility.card.name == CardDB.cardName.poisoneddaggers || p.ownHeroAblility.card.name == CardDB.cardName.daggermastery)) wAttack = 1;
+                if (wAttack > 0) retval = -p.ownWeapon.Attack - 1; // so he doesnt "lose" the weapon in evaluation :D
             }
-            if (p.ownWeapon.Angr == 1 && p.ownHeroName == HeroEnum.thief)
+            if (p.ownWeapon.Attack == 1 && p.ownHeroName == HeroEnum.thief)
             {
                 if (target.Hp < 11) retval += 1;
                 else retval += -1;
@@ -317,16 +317,16 @@
             return 0;
         }
 
-        public int getPlayCardPenality(CardDB.Card card, Minion target, Playfield p)
+        public int getPlayCardPenalty(CardDB.Card card, Minion target, Playfield p)
         {
-            int retval = ai.botBase.getPlayCardPenality(card, target, p);
+            int retval = ai.botBase.getPlayCardPenalty(card, target, p);
             if (retval < 0 || retval > 499) return retval;
 
             CardDB.cardName name = card.name;
             //there is no reason to buff HP of minon (because it is not healed)
 
-            int abuff = getAttackBuffPenality(card, target, p);
-            int tbuff = getTauntBuffPenality(card, target, p);
+            int abuff = getAttackBuffPenalty(card, target, p);
+            int tbuff = getTauntBuffPenalty(card, target, p);
             if (name == CardDB.cardName.markofthewild && ((abuff >= 500 && tbuff == 0) || (abuff == 0 && tbuff >= 500)))
             {
                 retval = 0;
@@ -335,33 +335,33 @@
             {
                 retval += abuff + tbuff;
             }
-            retval += getHPBuffPenality(card, target, p);
-            retval += getSilencePenality(name, target, p);
-            retval += getDamagePenality(card, target, p);
-            retval += getHealPenality(name, target, p);
-            retval += getCardDrawPenality(card, target, p);
+            retval += getHPBuffPenalty(card, target, p);
+            retval += getSilencePenalty(name, target, p);
+            retval += getDamagePenalty(card, target, p);
+            retval += getHealPenalty(name, target, p);
+            retval += getCardDrawPenalty(card, target, p);
             retval += getCardDrawofEffectMinions(card, p);
-            retval += getCardDiscardPenality(name, p);
-            retval += getDestroyOwnPenality(name, target, p);
+            retval += getCardDiscardPenalty(name, p);
+            retval += getDestroyOwnPenalty(name, target, p);
 
-            retval += getDestroyPenality(name, target, p);
-            retval += getSpecialCardComboPenalitys(card, target, p);
-            retval += getRandomPenaltiy(card, p, target);
-            retval += getBuffHandPenalityPlay(name, p);
+            retval += getDestroyPenalty(name, target, p);
+            retval += getSpecialCardComboPenalties(card, target, p);
+            retval += getRandomPenalty(card, p, target);
+            retval += getBuffHandPenaltyPlay(name, p);
             if (!p.isLethalCheck)
             {
-                retval += cb.getPenalityForDestroyingCombo(card, p);
+                retval += cb.getPenaltyForDestroyingCombo(card, p);
                 retval += cb.getPlayValue(card.cardIDenum);
             }
 
-            retval += playSecretPenality(card, p);
-            retval += getPlayCardSecretPenality(card, p);
+            retval += playSecretPenalty(card, p);
+            retval += getPlayCardSecretPenalty(card, p);
 
             return retval;
         }
 
 
-        private int getAttackBuffPenality(CardDB.Card card, Minion target, Playfield p)
+        private int getAttackBuffPenalty(CardDB.Card card, Minion target, Playfield p)
         {
             CardDB.cardName name = card.name;
             if (name == CardDB.cardName.darkwispers && card.cardIDenum != CardDB.cardIDEnum.GVG_041a) return 0;
@@ -394,10 +394,10 @@
                     switch (hc.card.name)
                     {
                         case CardDB.cardName.biggamehunter:
-                            if (target.Angr + this.attackBuffDatabase[name] > 6) return 5;
+                            if (target.Attack + this.attackBuffDatabase[name] > 6) return 5;
                             break;
                         case CardDB.cardName.shadowworddeath:
-                            if (target.Angr + this.attackBuffDatabase[name] > 4) return 5;
+                            if (target.Attack + this.attackBuffDatabase[name] > 4) return 5;
                             break;
                         default:
                             break;
@@ -412,7 +412,7 @@
                         return 0;
                     }
 
-                    if (!m.wounded && (m.Angr >= 4 || m.Hp >= 5))
+                    if (!m.wounded && (m.Attack >= 4 || m.Hp >= 5))
                     {
                         foreach (Handmanager.Handcard hc in p.owncards)
                         {
@@ -451,7 +451,7 @@
                 {
                     return 10;
                 }
-                if (m.Angr == 0)
+                if (m.Attack == 0)
                 {
                     if (!m.silenced && m.handcard.card.deathrattle) return -8;
                     return -5;
@@ -461,7 +461,7 @@
             return pen;
         }
 
-        private int getHPBuffPenality(CardDB.Card card, Minion target, Playfield p)
+        private int getHPBuffPenalty(CardDB.Card card, Minion target, Playfield p)
         {
             CardDB.cardName name = card.name;
             int pen = 0;
@@ -478,7 +478,7 @@
         }
 
 
-        private int getTauntBuffPenality(CardDB.Card card, Minion target, Playfield p)
+        private int getTauntBuffPenalty(CardDB.Card card, Minion target, Playfield p)
         {
             CardDB.cardName name = card.name;
             int pen = 0;
@@ -517,7 +517,7 @@
             return pen;
         }
 
-        private int getSilencePenality(CardDB.cardName name, Minion target, Playfield p)
+        private int getSilencePenalty(CardDB.cardName name, Minion target, Playfield p)
         {
             int pen = 0;
 
@@ -535,7 +535,7 @@
                 if (this.silenceDatabase.ContainsKey(name))
                 {
                     if (!target.silenced && this.OwnNeedSilenceDatabase.ContainsKey(target.name)) return -5;
-                    if (target.Angr < target.handcard.card.Attack || target.maxHp < target.handcard.card.Health
+                    if (target.Attack < target.handcard.card.Attack || target.maxHp < target.handcard.card.Health
                         || target.enemyPowerWordGlory > 0 || target.enemyBlessingOfWisdom > 0
                         || (target.frozen && !target.playedThisTurn && target.numAttacksThisTurn == 0))
                     {
@@ -574,13 +574,13 @@
                         if (target.handcard.card.deathrattle) return 0;
                     }
 
-                    if (target.Angr <= target.handcard.card.Attack && target.maxHp <= target.handcard.card.Health && !target.taunt && !target.windfury && !target.divineshild && !target.poisonous && !target.lifesteal && !this.specialMinions.ContainsKey(name))
+                    if (target.Attack <= target.handcard.card.Attack && target.maxHp <= target.handcard.card.Health && !target.taunt && !target.windfury && !target.divineshild && !target.poisonous && !target.lifesteal && !this.specialMinions.ContainsKey(name))
                     {
                         if (name == CardDB.cardName.keeperofthegrove) return 500;
                         return 30;
                     }
 
-                    if (target.Angr > target.handcard.card.Attack || target.maxHp > target.handcard.card.Health)
+                    if (target.Attack > target.handcard.card.Attack || target.maxHp > target.handcard.card.Health)
                     {
                         return 0;
                     }
@@ -593,13 +593,13 @@
 
         }
 
-        private int getDamagePenality(CardDB.Card card, Minion target, Playfield p)
+        private int getDamagePenalty(CardDB.Card card, Minion target, Playfield p)
         {
             CardDB.cardName name = card.name;
             int pen = 0;
 
             if (name == CardDB.cardName.shieldslam && p.ownHero.armor == 0) return 500;
-            if (name == CardDB.cardName.savagery && p.ownHero.Angr == 0) return 500;
+            if (name == CardDB.cardName.savagery && p.ownHero.Attack == 0) return 500;
             if (name == CardDB.cardName.maelstromportal) return 0;//大漩涡特例
 
             //aoe damage *************************************************************************************
@@ -629,7 +629,7 @@
                 int lostOwnHp = 0;
                 int lostOwnMinions = 0;
                 int survivedEnemyMinions = 0;
-                int survivedEnemyMinionsAngr = 0;
+                int survivedEnemyMinionsAttack = 0;
                 bool frothingberserkerEnemy = false;
                 bool frothingberserkerOwn = false;
                 bool grimpatronEnemy = false;
@@ -668,7 +668,7 @@
                                 if (m.name == CardDB.cardName.ysera) continue;
                                 break;
                             case CardDB.cardName.lightbomb:
-                                if (m.Hp > m.Angr) continue;
+                                if (m.Hp > m.Attack) continue;
                                 break;
                         }
 
@@ -683,12 +683,12 @@
                                     if (p.enemyMinions[i - 1].divineshild)
                                     {
                                         preventDamage += 1;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                     else if (p.enemyMinions[i - 1].Hp > aoeDamage)
                                     {
                                         preventDamage += 1;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp - aoeDamage <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp - aoeDamage <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                 }
                                 if (i < anz - 1)
@@ -696,12 +696,12 @@
                                     if (p.enemyMinions[i + 1].divineshild)
                                     {
                                         preventDamage += 1;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                     else if (p.enemyMinions[i + 1].Hp > aoeDamage)
                                     {
                                         preventDamage += 1;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp - aoeDamage <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp - aoeDamage <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                 }
                                 break;
@@ -712,12 +712,12 @@
                                     if (p.enemyMinions[i - 1].divineshild)
                                     {
                                         preventDamage += 2;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                     else if (p.enemyMinions[i - 1].Hp > aoeDamage)
                                     {
                                         preventDamage += 2;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp - aoeDamage <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i - 1].Hp - aoeDamage <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                 }
                                 if (i < anz - 1)
@@ -725,12 +725,12 @@
                                     if (p.enemyMinions[i + 1].divineshild)
                                     {
                                         preventDamage += 2;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                     else if (p.enemyMinions[i + 1].Hp > aoeDamage)
                                     {
                                         preventDamage += 2;
-                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp - aoeDamage <= p.ownHero.Angr) preventDamageAdd = 1;
+                                        if (preventDamageAdd == 0 && p.ownHero.Ready && p.enemyMinions[i + 1].Hp - aoeDamage <= p.ownHero.Attack) preventDamageAdd = 1;
                                     }
                                 }
                                 break;
@@ -803,12 +803,12 @@
                                 preventDamage++;
                                 break;
                         }
-                        preventDamage += m.Angr;
+                        preventDamage += m.Attack;
                     }
                     else
                     {
                         survivedEnemyMinions++;
-                        if (survivedEnemyMinionsAngr < m.Angr) survivedEnemyMinionsAngr = m.Angr;
+                        if (survivedEnemyMinionsAttack < m.Attack) survivedEnemyMinionsAttack = m.Attack;
                         if (!m.wounded && this.enrageDatabase.ContainsKey(name)) preventDamage -= this.enrageDatabase[name];
                         else if (m.name == CardDB.cardName.gurubashiberserker) preventDamage -= 3;
                         else if (m.name == CardDB.cardName.frothingberserker) frothingberserkerEnemy = true;
@@ -849,7 +849,7 @@
                                     if (m.name == CardDB.cardName.ysera) continue;
                                     break;
                                 case CardDB.cardName.lightbomb:
-                                    if (m.Hp > m.Angr) continue;
+                                    if (m.Hp > m.Attack) continue;
                                     break;
                             }
 
@@ -929,7 +929,7 @@
                                     break;
                             }
                             lostOwnHp += m.Hp;
-                            lostOwnDamage += m.Angr;
+                            lostOwnDamage += m.Attack;
 
                             lostOwnMinions++;
                             if (!m.wounded && this.enrageDatabase.ContainsKey(name)) lostOwnDamage += this.enrageDatabase[name];
@@ -979,7 +979,7 @@
                         if (hasExecute > 0)
                         {
                             if (survivedEnemyMinions <= hasExecute) return 0;
-                            preventDamage += survivedEnemyMinionsAngr;
+                            preventDamage += survivedEnemyMinionsAttack;
                             if (preventDamage > 6) preventDamage = 6;
                         }
                     }
@@ -988,13 +988,13 @@
                     Minion bogMob = null;
                     foreach (Minion m in p.ownMinions)
                     {
-                        if (m.Angr > tmp)
+                        if (m.Attack > tmp)
                         {
-                            tmp = m.Angr;
+                            tmp = m.Attack;
                             bogMob = m;
                         }
                     }
-                    if (bogMob != null && bogMob.Angr >= 4 && bogMob.Hp > preventDamage)
+                    if (bogMob != null && bogMob.Attack >= 4 && bogMob.Hp > preventDamage)
                     {
                         preventDamage = 6;
                     }
@@ -1111,7 +1111,7 @@
                             if (m.Hp >= 2)
                             {
                                 if ((!m.silenced && this.OwnNeedSilenceDatabase.ContainsKey(m.name))
-                                    || m.Angr < m.handcard.card.Attack || m.maxHp < m.handcard.card.Health
+                                    || m.Attack < m.handcard.card.Attack || m.maxHp < m.handcard.card.Health
                                     || m.enemyPowerWordGlory > 0 || m.enemyBlessingOfWisdom > 0
                                     || (m.frozen && !m.playedThisTurn && m.numAttacksThisTurn == 0))
                                     return 0;
@@ -1150,7 +1150,7 @@
                     {
                         case CardDB.cardName.soulfire: if (target.Hp <= realDamage - 2) pen = 10; break;
                         case CardDB.cardName.baneofdoom: if (target.Hp > realDamage) pen = 10; break;
-                        case CardDB.cardName.shieldslam: if (target.Hp <= 4 || target.Angr <= 4) pen = 20; break;
+                        case CardDB.cardName.shieldslam: if (target.Hp <= 4 || target.Attack <= 4) pen = 20; break;
                         case CardDB.cardName.bloodtoichor: if (target.Hp <= realDamage) pen = 2; break;
                     }
                 }
@@ -1181,9 +1181,9 @@
             return pen;
         }
 
-        private int getHealPenality(CardDB.cardName name, Minion target, Playfield p)
+        private int getHealPenalty(CardDB.cardName name, Minion target, Playfield p)
         {
-            ///Todo healpenality for aoe heal
+            ///Todo healpenalty for aoe heal
             ///todo auchenai soulpriest
             if (p.anzOwnAuchenaiSoulpriest >= 1) return 0;
             int pen = 0;
@@ -1271,12 +1271,12 @@
                 {
                     m = target;
                     if (m.Hp == m.maxHp) return 500;
-                    // no penality if we heal enrage enemy
+                    // no penalty if we heal enrage enemy
                     if (enrageDatabase.ContainsKey(m.name))
                     {
                         return pen;
                     }
-                    // no penality if we have heal-trigger :D
+                    // no penalty if we have heal-trigger :D
                     int i = 0;
                     foreach (Minion mnn in p.ownMinions)
                     {
@@ -1307,9 +1307,9 @@
             return pen;
         }
 
-        private int getCardDrawPenality(CardDB.Card card, Minion target, Playfield p)
+        private int getCardDrawPenalty(CardDB.Card card, Minion target, Playfield p)
         {
-            // penality if carddraw is late or you have enough cards
+            // penalty if carddraw is late or you have enough cards
             int pen = 0;
             CardDB.cardName name = card.name;
             if (!cardDrawBattleCryDatabase.ContainsKey(name)) return 0;
@@ -1542,9 +1542,9 @@
             return pen;
         }
 
-        public int getCardDrawDeathrattlePenality(CardDB.cardName name, Playfield p)
+        public int getCardDrawDeathrattlePenalty(CardDB.cardName name, Playfield p)
         {
-            // penality if carddraw is late or you have enough cards
+            // penalty if carddraw is late or you have enough cards
             if (!cardDrawDeathrattleDatabase.ContainsKey(name)) return 0;
 
             int carddraw = cardDrawDeathrattleDatabase[name];
@@ -1552,7 +1552,7 @@
             return 3 * p.optionsPlayedThisTurn;
         }
 
-        private int getRandomPenaltiy(CardDB.Card card, Playfield p, Minion target)
+        private int getRandomPenalty(CardDB.Card card, Playfield p, Minion target)
         {
             if (p.turnCounter >= 1)
             {
@@ -1691,7 +1691,7 @@
         }
 
 
-        private int getBuffHandPenalityPlay(CardDB.cardName name, Playfield p)
+        private int getBuffHandPenaltyPlay(CardDB.cardName name, Playfield p)
         {
             if (!buffHandDatabase.ContainsKey(name)) return 0;
 
@@ -1772,7 +1772,7 @@
             return 0;
         }
 
-        private int getCardDiscardPenality(CardDB.cardName name, Playfield p)
+        private int getCardDiscardPenalty(CardDB.cardName name, Playfield p)
         {
             if (p.owncards.Count <= 1) return 0;
             if (p.ownMaxMana <= 3) return 0;
@@ -1803,7 +1803,7 @@
             return pen;
         }
 
-        private int getDestroyOwnPenality(CardDB.cardName name, Minion target, Playfield p)
+        private int getDestroyOwnPenalty(CardDB.cardName name, Minion target, Playfield p)
         {
             if (!this.destroyOwnDatabase.ContainsKey(name)) return 0;
 
@@ -1827,8 +1827,8 @@
                     int veryhighminion = 0;
                     foreach (Minion m in p.enemyMinions)
                     {
-                        if (m.Angr >= 5 || m.Hp >= 5) highminion++;
-                        if (m.Angr >= 8 || m.Hp >= 8) veryhighminion++;
+                        if (m.Attack >= 5 || m.Hp >= 5) highminion++;
+                        if (m.Attack >= 8 || m.Hp >= 8) veryhighminion++;
                     }
 
                     if (highminion >= 2 || veryhighminion >= 1)
@@ -1911,7 +1911,7 @@
             return 0;
         }
 
-        private int getDestroyPenality(CardDB.cardName name, Minion target, Playfield p)
+        private int getDestroyPenalty(CardDB.cardName name, Minion target, Playfield p)
         {
             if (!this.destroyDatabase.ContainsKey(name) || p.isLethalCheck) return 0;
             int pen = 0;
@@ -1937,17 +1937,17 @@
 
                 if (name == CardDB.cardName.shadowwordpain)
                 {
-                    if (this.specialMinions.ContainsKey(m.name) || m.Angr == 3 || m.Hp >= 4)
+                    if (this.specialMinions.ContainsKey(m.name) || m.Attack == 3 || m.Hp >= 4)
                     {
                         return 0;
                     }
 
-                    if (m.Angr == 2) return 5;
+                    if (m.Attack == 2) return 5;
 
                     return 10;
                 }
 
-                if (m.Angr >= 4 || m.Hp >= 5)
+                if (m.Attack >= 4 || m.Hp >= 5)
                 {
                     pen = 0; // so we dont destroy cheap ones :D
                 }
@@ -1971,7 +1971,7 @@
             return pen;
         }
 
-        private int getSpecialCardComboPenalitys(CardDB.Card card, Minion target, Playfield p)
+        private int getSpecialCardComboPenalties(CardDB.Card card, Minion target, Playfield p)
         {
             bool lethal = p.isLethalCheck;
             CardDB.cardName name = card.name;
@@ -2015,7 +2015,7 @@
                             }
                             break;
                         case 5:
-                            if (p.ownHero.Ready && p.ownHero.Angr >= 1) return 0;
+                            if (p.ownHero.Ready && p.ownHero.Attack >= 1) return 0;
                             break;
                         case 6:
                             foreach (Minion mm in p.ownMinions)
@@ -2267,7 +2267,7 @@
                     foreach (Minion m in p.ownMinions)
                     {
 
-                        ownMinionsValue += (m.Hp + m.Angr * 3);
+                        ownMinionsValue += (m.Hp + m.Attack * 3);
                     }
                     if (p.ownMinions.Count < 4) return 45 - p.ownMinions.Count * 30 + p.owncards.Count * 10 + ownMinionsValue;
                     return 0;
@@ -2292,8 +2292,8 @@
                             {
                                 bonusValue += 2;
                             }
-                            ownTotemsValue += (2 * m.Angr + 1 * m.Hp + bonusValue);
-                            //ownTotemsValue += (m.Hp + m.Angr + bonusAngr);
+                            ownTotemsValue += (2 * m.Attack + 1 * m.Hp + bonusValue);
+                            //ownTotemsValue += (m.Hp + m.Attack + bonusAttack);
                         }
                     }
                     //分段处理,避免爆仓
@@ -2338,7 +2338,7 @@
                 case CardDB.cardName.hobartgrapplehammer: return -5;
                 case CardDB.cardName.bloodsailraider: if (p.ownWeapon.Durability == 0) return 5; return 0;
                 case CardDB.cardName.captaingreenskin: if (p.ownWeapon.Durability == 0) return 10; return 0;
-                case CardDB.cardName.luckydobuccaneer: if (!(p.ownWeapon.Durability > 0 && p.ownWeapon.Angr > 2)) return 10; return 0;
+                case CardDB.cardName.luckydobuccaneer: if (!(p.ownWeapon.Durability > 0 && p.ownWeapon.Attack > 2)) return 10; return 0;
                 case CardDB.cardName.nagacorsair: if (p.ownWeapon.Durability == 0) return 5; return 0;
                 case CardDB.cardName.goblinautobarber: if (p.ownWeapon.Durability == 0) return 5; return 0;
                 case CardDB.cardName.dreadcorsair: if (p.ownWeapon.Durability == 0) return 5; return 0;
@@ -2408,7 +2408,7 @@
                 case CardDB.cardName.moltenblade: return -10;
                 case CardDB.cardName.gluttonousooze: goto case CardDB.cardName.acidicswampooze;
                 case CardDB.cardName.acidicswampooze:
-                    if (p.enemyWeapon.Angr > 0) return 0;
+                    if (p.enemyWeapon.Attack > 0) return 0;
                     if (p.enemyHeroName == HeroEnum.shaman || p.enemyHeroName == HeroEnum.warrior || p.enemyHeroName == HeroEnum.thief || p.enemyHeroName == HeroEnum.pala) return 10;
                     if (p.enemyHeroName == HeroEnum.hunter) return 6;
                     return 0;
@@ -2454,7 +2454,7 @@
                 pen = 0;
                 foreach (Minion mnn in p.enemyMinions)
                 {
-                    if (mnn.Angr > 3 && p.anzOwnTaunt == 0)
+                    if (mnn.Attack > 3 && p.anzOwnTaunt == 0)
                     {
                         pen = 5;
                         break;
@@ -2483,19 +2483,19 @@
             {
                 if (p.owncards.Count > 2)
                 {
-                    int eAngr = p.enemyWeapon.Angr;
+                    int eAttack = p.enemyWeapon.Attack;
                     foreach (Minion em in p.enemyMinions)
                     {
-                        if (!em.frozen) eAngr += em.Angr;
+                        if (!em.frozen) eAttack += em.Attack;
                     }
                     if (p.anzOwnTaunt > 0)
                     {
                         foreach (Minion om in p.ownMinions)
                         {
-                            if (om.taunt) eAngr -= om.Hp;
+                            if (om.taunt) eAttack -= om.Hp;
                         }
                     }
-                    if (eAngr >= 3) return 5;
+                    if (eAttack >= 3) return 5;
                 }
                 return 0;
             }
@@ -2533,7 +2533,7 @@
 
             if (card.name == CardDB.cardName.daggermastery)
             {
-                if (p.ownWeapon.Angr >= 2 || p.ownWeapon.Durability >= 2) return 5;
+                if (p.ownWeapon.Attack >= 2 || p.ownWeapon.Durability >= 2) return 5;
             }
 
             if (card.name == CardDB.cardName.upgrade)
@@ -2565,7 +2565,7 @@
 
             }
 
-            //destroySecretPenality
+            //destroySecretPenalty
             pen = 0;
             switch (card.name)
             {
@@ -2647,7 +2647,7 @@
                     bool found = false;
                     foreach (Minion mi in p.enemyMinions)
                     {
-                        if (mi.Angr <= 2) found = true;
+                        if (mi.Attack <= 2) found = true;
                     }
                     if (!found) return 20;
                     break;
@@ -2716,7 +2716,7 @@
                         if (!target.own) return 500;
                         if (!target.Ready && !target.handcard.card.isSpecialMinion)
                         {
-                            if (target.Angr <= 2 && target.Hp <= 2) pen = 15;
+                            if (target.Attack <= 2 && target.Hp <= 2) pen = 15;
                             else pen = 10;
                         }
                     }
@@ -2724,7 +2724,7 @@
 
                 case CardDB.cardName.facelessmanipulator:
                     if (target == null) return 50;
-                    if (target.Angr >= 5 || target.handcard.card.cost >= 5 || (target.handcard.card.rarity == 5 || target.handcard.card.cost >= 3))
+                    if (target.Attack >= 5 || target.handcard.card.cost >= 5 || (target.handcard.card.rarity == 5 || target.handcard.card.cost >= 3))
                     {
                         return 0;
                     }
@@ -2746,7 +2746,7 @@
                     if (target == null) return 50;
                     foreach (Minion mnn in p.enemyMinions)
                     {
-                        if (mnn.taunt && (target.Angr >= 3 || target.Hp >= 3)) return 0;
+                        if (mnn.taunt && (target.Attack >= 3 || target.Hp >= 3)) return 0;
                     }
                     return 20;
 
@@ -2766,7 +2766,7 @@
                 case CardDB.cardName.betrayal:
                     if (!target.own && !target.isHero)
                     {
-                        if (target.Angr == 0) return 30;
+                        if (target.Attack == 0) return 30;
                         if (p.enemyMinions.Count == 1) return 30;
                     }
                     break;
@@ -2834,8 +2834,8 @@
                     return 0;
 
                 case CardDB.cardName.lavashock:
-                    if (p.ueberladung + p.lockedMana < 1) return 15;
-                    return (3 - 3 * (p.ueberladung + p.lockedMana));
+                    if (p.overload + p.lockedMana < 1) return 15;
+                    return (3 - 3 * (p.overload + p.lockedMana));
 
                 case CardDB.cardName.edwinvancleef:
                     if (p.cardsPlayedThisTurn < 1) return 30;
@@ -2873,8 +2873,8 @@
                             if (target.allreadyAttacked) return 30;
                             Minion frog = target;
                             if (this.priorityTargets.ContainsKey(frog.name)) return 0;
-                            if (frog.Angr >= 4 && frog.Hp >= 4) return 0;
-                            if (frog.Angr >= 2 && frog.Hp >= 6) return 5;
+                            if (frog.Attack >= 4 && frog.Hp >= 4) return 0;
+                            if (frog.Attack >= 2 && frog.Hp >= 6) return 5;
                             return 30;
                         }
                     }
@@ -2944,7 +2944,7 @@
                     if (!target.isHero)
                     {
                         if (target.own) return 500;
-                        else if (target.Hp <= 4 && target.Angr <= 4 && !(target.poisonous && !target.silenced))
+                        else if (target.Hp <= 4 && target.Attack <= 4 && !(target.poisonous && !target.silenced))
                         {
                             pen = 20;
                         }
@@ -2959,7 +2959,7 @@
                     int prevDmg = 0;
                     foreach (Minion m1 in p.enemyMinions)
                     {
-                        prevDmg += m1.Angr;
+                        prevDmg += m1.Attack;
                     }
                     if (p.ownHero.Hp + p.ownHero.armor > prevDmg * 2) pen += p.ownMinions.Count * 10 + p.owncards.Count * 25;
                     break;
@@ -2977,7 +2977,7 @@
                     if (target != null)
                     {
                         if (target.own) pen = 500;
-                        else if (target.Angr <= 3) pen = 30;
+                        else if (target.Attack <= 3) pen = 30;
                         if (target.name == CardDB.cardName.lightspawn) pen = 500;
                     }
                     else pen = 40;
@@ -3022,7 +3022,7 @@
                     {
                         if (target.handcard.card.deathrattle || target.ancestralspirit >= 1 || target.desperatestand >= 1 || target.souloftheforest >= 1 || target.stegodon >= 1 || target.livingspores >= 1 || target.infest >= 1 || target.explorershat >= 1 || target.returnToHand >= 1 || target.deathrattle2 != null || target.enemyBlessingOfWisdom >= 1 || target.enemyPowerWordGlory >= 1) return 0;
                         if (target.handcard.card.Charge && ((target.numAttacksThisTurn == 1 && !target.windfury) || (target.numAttacksThisTurn == 2 && target.windfury))) return 0;
-                        if (target.wounded || target.Angr < target.handcard.card.Attack || (target.silenced && this.specialMinions.ContainsKey(target.name))) return 0;
+                        if (target.wounded || target.Attack < target.handcard.card.Attack || (target.silenced && this.specialMinions.ContainsKey(target.name))) return 0;
 
                         bool hasOnMinionDiesMinion = false;
                         foreach (Minion mnn in p.ownMinions)
@@ -3035,10 +3035,10 @@
                     }
                     else
                     {
-                        if (target.name == CardDB.cardName.nerubianegg && target.Angr <= 4 && !target.taunt) return 500;
+                        if (target.name == CardDB.cardName.nerubianegg && target.Attack <= 4 && !target.taunt) return 500;
                         if (target.taunt && !target.handcard.card.tank) return 0;
                         if (target.enemyBlessingOfWisdom >= 1 || target.enemyPowerWordGlory >= 1) return 0;
-                        if (target.Angr > target.handcard.card.Attack || target.Hp > target.handcard.card.Health) return 0;
+                        if (target.Attack > target.handcard.card.Attack || target.Hp > target.handcard.card.Health) return 0;
                         if (target.name == CardDB.cardName.abomination || target.name == CardDB.cardName.zombiechow || target.name == CardDB.cardName.unstableghoul || target.name == CardDB.cardName.dancingswords) return 0;
                         return 500;
                     }
@@ -3223,9 +3223,9 @@
             return pen;
         }
 
-        private int playSecretPenality(CardDB.Card card, Playfield p)
+        private int playSecretPenalty(CardDB.Card card, Playfield p)
         {
-            //penality if we play secret and have playable kirintormage
+            //penalty if we play secret and have playable kirintormage
             int pen = 0;
             if (card.Secret)
             {
@@ -3258,7 +3258,7 @@
         /// Then attack the mage directly with the smallest minion on your side. 
         /// If nothing triggered by that point, it’s either Spellbender or Counterspell, so hold your spells until you can (and have to!) deal with either. 
 
-        private int getPlayCardSecretPenality(CardDB.Card c, Playfield p)
+        private int getPlayCardSecretPenalty(CardDB.Card c, Playfield p)
         {
             int pen = 0;
             if (p.enemySecretCount == 0)
@@ -3288,13 +3288,13 @@
             if ((c.name == CardDB.cardName.acidicswampooze || c.name == CardDB.cardName.gluttonousooze)
                 && (p.enemyHeroStartClass == TAG_CLASS.WARRIOR || p.enemyHeroStartClass == TAG_CLASS.ROGUE || p.enemyHeroStartClass == TAG_CLASS.PALADIN))
             {
-                if (p.enemyHeroStartClass == TAG_CLASS.ROGUE && p.enemyWeapon.Angr <= 2)
+                if (p.enemyHeroStartClass == TAG_CLASS.ROGUE && p.enemyWeapon.Attack <= 2)
                 {
                     pen += 100;
                 }
                 else
                 {
-                    if (p.enemyWeapon.Angr <= 1)
+                    if (p.enemyWeapon.Attack <= 1)
                     {
                         pen += 100;
                     }
@@ -3319,7 +3319,7 @@
                     {
                         Hp = c.Health,
                         maxHp = c.Health,
-                        Angr = c.Attack,
+                        Attack = c.Attack,
                         taunt = c.tank,
                         name = c.name
                     };
@@ -3346,7 +3346,7 @@
                     {
                         Hp = c.Health,
                         maxHp = c.Health,
-                        Angr = c.Attack,
+                        Attack = c.Attack,
                         taunt = c.tank,
                         name = c.name
                     };
@@ -3360,7 +3360,7 @@
             return pen;
         }
 
-        private int getAttackSecretPenality(Minion m, Playfield p, Minion target)
+        private int getAttackSecretPenalty(Minion m, Playfield p, Minion target)
         {
             if (p.enemySecretCount == 0)
             {
@@ -3411,7 +3411,7 @@
 
                 if (target.isHero && !target.own && p.enemyMinions.Count >= 1)
                 {
-                    if (hasMinionsWithLowHeal(p)) pen += 10; //penality if we doesn't attacked minions before
+                    if (hasMinionsWithLowHeal(p)) pen += 10; //penalty if we doesn't attacked minions before
                 }
             }
 
@@ -3450,7 +3450,7 @@
 
                 if (target.isHero && !target.own && p.enemyMinions.Count >= 1)
                 {
-                    if (hasMinionsWithLowHeal(p)) pen += 10; //penality if we doesn't attacked minions before
+                    if (hasMinionsWithLowHeal(p)) pen += 10; //penalty if we doesn't attacked minions before
                 }
             }
 
@@ -3529,7 +3529,7 @@
         private int getValueOfMinion(Minion m)
         {
             int ret = 0;
-            ret += 2 * m.Angr + m.Hp;
+            ret += 2 * m.Attack + m.Hp;
             if (m.taunt) ret += 2;
             if (this.priorityDatabase.ContainsKey(m.name)) ret += 20 + priorityDatabase[m.name];
             return ret;
@@ -3577,7 +3577,7 @@
                 CardDB.Card c = card.card;
                 m.Hp = c.Health;
                 m.maxHp = c.Health;
-                m.Angr = c.Attack;
+                m.Attack = c.Attack;
                 m.taunt = c.tank;
                 m.name = c.name;
                 if (getValueOfMinion(m) < val) ret = false;
@@ -5833,7 +5833,7 @@
         }
 
 
-        public int getClassRacePriorityPenality(TAG_CLASS opponentHeroClass, TAG_RACE minionRace)
+        public int getClassRacePriorityPenalty(TAG_CLASS opponentHeroClass, TAG_RACE minionRace)
         {
             int retval = 0;
             switch (opponentHeroClass)

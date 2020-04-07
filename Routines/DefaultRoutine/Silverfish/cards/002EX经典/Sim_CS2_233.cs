@@ -10,7 +10,7 @@ namespace HREngine.Bots
 
         public override void onCardPlay(Playfield p, bool ownplay, Minion target, int choice)
         {
-            int damage = (ownplay) ? p.getSpellDamageDamage(p.ownWeapon.Angr) : p.getEnemySpellDamageDamage(p.enemyWeapon.Angr);
+            int damage = (ownplay) ? p.getSpellDamageDamage(p.ownWeapon.Attack) : p.getEnemySpellDamageDamage(p.enemyWeapon.Attack);
 
             p.allMinionOfASideGetDamage(!ownplay, damage);
             //destroy own weapon

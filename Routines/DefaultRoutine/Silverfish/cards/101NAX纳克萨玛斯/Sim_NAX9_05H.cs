@@ -17,7 +17,7 @@ namespace HREngine.Bots
             {
                 if (p.anzOwnHorsemen < 1)
                 {
-                    p.ownWeapon.Angr += 6;
+                    p.ownWeapon.Attack += 6;
                     p.minionGetBuffed(p.ownHero, 6, 0);
                 }
             }
@@ -25,7 +25,7 @@ namespace HREngine.Bots
             {
                 if (p.anzEnemyHorsemen < 1)
                 {
-                    p.enemyWeapon.Angr += 6;
+                    p.enemyWeapon.Attack += 6;
                     p.minionGetBuffed(p.enemyHero, 6, 0);
                 }
             }

@@ -24,12 +24,12 @@ namespace HREngine.Bots
                 {
                     hc.addattack += 4;
                     hc.addHp += 2;
-                    p.anzOwnExtraAngrHp += 6;
+                    p.anzOwnExtraAttackHp += 6;
                 }
             }
             else
             {
-                if (p.enemyAnzCards > 0) p.anzEnemyExtraAngrHp += 6;
+                if (p.enemyAnzCards > 0) p.anzEnemyExtraAttackHp += 6;
             }
         }
     }

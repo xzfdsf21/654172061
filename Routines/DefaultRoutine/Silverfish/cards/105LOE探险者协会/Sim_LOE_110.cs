@@ -16,9 +16,9 @@ namespace HREngine.Bots
                 {
                     p.ownDeckSize++;
 
-                    if (p.ownHero.Hp < 8) p.evaluatePenality += 7;
-                    else if (p.ownHero.Hp < 14) p.evaluatePenality += 4;
-                    else if (p.ownHero.Hp < 21) p.evaluatePenality += 2;
+                    if (p.ownHero.Hp < 8) p.evaluatePenalty += 7;
+                    else if (p.ownHero.Hp < 14) p.evaluatePenalty += 4;
+                    else if (p.ownHero.Hp < 21) p.evaluatePenalty += 2;
 
                     if (p.ownDeckSize <= 6) p.minionGetDamageOrHeal(p.ownHero, Math.Min(7, p.ownHero.Hp - 1), true);
                     else if (p.ownDeckSize <= 16) p.minionGetDamageOrHeal(p.ownHero, Math.Min(3, p.ownHero.Hp - 1), true);

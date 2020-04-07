@@ -14,11 +14,11 @@ namespace HREngine.Bots
             {
                 if (own)
                 {
-                    if (p.ownWeapon.Durability > 0) p.ownWeapon.Angr++;
+                    if (p.ownWeapon.Durability > 0) p.ownWeapon.Attack++;
                 }
                 else
                 {
-                    if (p.enemyWeapon.Durability > 0) p.enemyWeapon.Angr++;
+                    if (p.enemyWeapon.Durability > 0) p.enemyWeapon.Attack++;
                 }
             }
         }

@@ -15,7 +15,7 @@ namespace HREngine.Bots
                 p.ownCrystalCore = 5;
                 foreach (Minion m in p.ownMinions)
                 {
-                    p.minionSetAngrToX(m, 5);
+                    p.minionSetAttackToX(m, 5);
                     p.minionSetLifetoX(m, 5);
                 }
 

@@ -12,8 +12,8 @@ namespace HREngine.Bots
         {
             if (own.own)
             {
-                if (p.anzOgOwnCThunAngrBonus + 6 > 9) p.minionGetBuffed(own, 0, 5);
-                else p.evaluatePenality += 5;
+                if (p.anzOgOwnCThunAttackBonus + 6 > 9) p.minionGetBuffed(own, 0, 5);
+                else p.evaluatePenalty += 5;
             }
         }
     }

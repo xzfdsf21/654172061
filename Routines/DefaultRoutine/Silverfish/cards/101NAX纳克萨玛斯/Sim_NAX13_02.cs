@@ -12,11 +12,11 @@ namespace HREngine.Bots
         {
             foreach (Minion m in p.ownMinions)
             {
-                p.minionSwapAngrAndHP(m);
+                p.minionSwapAttackAndHP(m);
             }
             foreach (Minion m in p.enemyMinions)
             {
-                p.minionSwapAngrAndHP(m);
+                p.minionSwapAttackAndHP(m);
             }
         }
     }

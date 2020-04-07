@@ -13,7 +13,7 @@ namespace HREngine.Bots
             p.drawACard(CardDB.cardName.unknown, ownplay);
             p.drawACard(CardDB.cardName.unknown, ownplay);
             p.drawACard(CardDB.cardName.unknown, ownplay);
-            if (ownplay) p.evaluatePenality -= 20;
+            if (ownplay) p.evaluatePenalty -= 20;
         }
     }
 }

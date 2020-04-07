@@ -21,7 +21,7 @@ namespace HREngine.Bots
                     if (p.enemyMinions.Count >= p.ownMinions.Count) pen = -8;
                     break;
             }
-            p.evaluatePenality += pen;
+            p.evaluatePenalty += pen;
         }
     }
 }
