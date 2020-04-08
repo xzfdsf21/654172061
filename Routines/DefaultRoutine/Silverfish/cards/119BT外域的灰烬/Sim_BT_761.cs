@@ -8,5 +8,12 @@ namespace HREngine.Bots
 //突袭，亡语：召唤一个5/9并具有嘲讽
 
 	{
+		CardDB.Card kid = CardDB.Instance.getCardDataFromID(CardDB.cardIDEnum.BT_761t);
+
+
+		public override void onDeathrattle(Playfield p, Minion m)
+		{
+			p.callKid(kid, m.zonepos - 1, m.own);
+		}
 	}
 }

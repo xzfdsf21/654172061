@@ -5,8 +5,10 @@ using System.Text;
 namespace HREngine.Bots
 {
 	class Sim_BT_321  : SimTemplate// BT_321  虚无行者
-//战吼：
-
 	{
+		public override void getBattlecryEffect(Playfield p, Minion own, Minion target, int choice) //战吼：发现一张恶魔牌。
+		{
+			p.drawACard(CardDB.cardName.unknown, own.own,true);
+		}
 	}
 }
