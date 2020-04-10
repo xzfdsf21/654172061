@@ -7790,9 +7790,7 @@
                     this.drawACard(CardDB.cardIDEnum.DAL_741, own, true);//虚灵跟班
                     break;
                 default:
-                    this.minionGetTempBuff(own ? this.ownHero : this.enemyHero, 3, 0);
-                    if (!this.ownHero.Ready) this.evaluatePenalty += 20;
-                    Helpfunctions.Instance.ErrorLog("[提示] 未知的英雄进行祈求,默认为战士");
+                    Helpfunctions.Instance.ErrorLog("[提示] 未知的英雄进行祈求");
                     break;
             }
             return;

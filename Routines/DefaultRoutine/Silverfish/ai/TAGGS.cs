@@ -323,7 +323,8 @@
         WARRIOR = 10,
         DREAM = 11,
         NEUTRAL = 12,
-        ALL = 13
+        ALL = 13,
+        DEMONHUNTER = 14
     }
 
     public enum TAG_RACE

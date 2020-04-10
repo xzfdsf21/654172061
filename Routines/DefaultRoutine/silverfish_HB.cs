@@ -324,7 +324,8 @@ namespace HREngine.Bots
             Hrtprozis.Instance.updateCrystalCore(this.ownCrystalCore);
             Hrtprozis.Instance.updateOwnMinionsInDeckCost0(this.ownMinionsCost0);
             Probabilitymaker.Instance.setEnemySecretGuesses(this.enemySecretList);
-
+            Helpfunctions.Instance.ErrorLog("[测试]我方职业：" + Hrtprozis.Instance.ownHeroStartClass+" 我方英雄ID："+ TritonHs.OurHero.Id);
+            Helpfunctions.Instance.ErrorLog("[测试]敌方职业：" + Hrtprozis.Instance.enemyHeroStartClass + " 敌方英雄ID：" + TritonHs.EnemyHero.Id);
             Helpfunctions.Instance.ErrorLog("我方祈求数：" + Hrtprozis.Instance.OwnInvoke);
             Helpfunctions.Instance.ErrorLog("敌方祈求数：" + Hrtprozis.Instance.EnemyInvoke);
             sleepRetry = this.needSleep;

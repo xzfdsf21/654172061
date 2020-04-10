@@ -16,6 +16,7 @@
         warrior,
         shaman,
         mage,
+        demonhunter,
         lordjaraxxus,
         ragnarosthefirelord,
         hogger
@@ -234,32 +235,73 @@
             {
                 case "HERO_01": return "warrior";
                 case "HERO_01a": return "warrior";
+                case "HERO_01b": return "warrior";
+                case "HERO_01c": return "warrior";
                 case "ICC_834": return "warrior";
+                case "BOT_238": return "warrior";
+                case "DRG_650": return "warrior";
+                case "DRG_650t2": return "warrior";
+                case "DRG_650t3": return "warrior";
                 case "HERO_02": return "shaman";
                 case "HERO_02a": return "shaman";
-                case "ICC_481": return "shaman";
+                case "HERO_02b": return "shaman";
+                case "HERO_02c": return "shaman";
+                case "HERO_02d": return "shaman";
+                case "HERO_02e": return "shaman";
+                case "ICC_481": return "shaman";                
+                case "GIL_504": return "shaman";
+                case "DRG_620": return "shaman";
+                case "DRG_620t2": return "shaman";
+                case "DRG_620t3": return "shaman";
                 case "HERO_03": return "thief";
                 case "HERO_03a": return "thief";
+                case "HERO_03b": return "thief";
                 case "ICC_827": return "thief";
+                case "DRG_610": return "thief";
+                case "DRG_610t2": return "thief";
+                case "DRG_610t3": return "thief";
                 case "HERO_04": return "pala";
                 case "HERO_04a": return "pala";
                 case "HERO_04b": return "pala";
+                case "HERO_04c": return "pala";
+                case "HERO_04d": return "pala";
                 case "ICC_829": return "pala";
                 case "HERO_05": return "hunter";
                 case "HERO_05a": return "hunter";
+                case "HERO_05b": return "hunter";
+                case "HERO_05c": return "hunter";
                 case "ICC_828": return "hunter";
+                case "TRL_065": return "hunter";
                 case "HERO_06": return "druid";
+                case "HERO_06a": return "druid";
+                case "HERO_06b": return "druid";
+                case "HERO_06c": return "druid";
+                case "HERO_06d": return "druid";
                 case "ICC_832": return "druid";
                 case "HERO_07": return "warlock";
                 case "HERO_07a": return "warlock";
+                case "HERO_07b": return "warlock";
+                case "HERO_07c": return "warlock";
                 case "ICC_831": return "warlock";
+                case "DRG_600": return "warlock";
+                case "DRG_600t2": return "warlock";
+                case "DRG_600t3": return "warlock";
                 case "HERO_08": return "mage";
                 case "HERO_08a": return "mage";
                 case "HERO_08b": return "mage";
+                case "HERO_08c": return "mage";
                 case "ICC_833": return "mage";
+                case "YOD_009": return "mage";
                 case "HERO_09": return "priest";
                 case "HERO_09a": return "priest";
+                case "HERO_09b": return "priest";
+                case "HERO_09c": return "priest";
                 case "ICC_830": return "priest";
+                case "DRG_660": return "priest";
+                case "DRG_660t2": return "priest";
+                case "DRG_660t3": return "priest";
+                case "HERO_10": return "demonhunter";
+                case "HERO_10a": return "demonhunter";
                 case "EX1_323h": return "lordjaraxxus";
                 case "BRM_027h": return "ragnarosthefirelord";
                 default:
@@ -285,6 +327,7 @@
                 case "maievshadowsong": return HeroEnum.thief;
                 case "warlock": return HeroEnum.warlock;
                 case "warrior": return HeroEnum.warrior;
+                case "demonhunter": return HeroEnum.demonhunter;
                 case "lordjaraxxus": return HeroEnum.lordjaraxxus;
                 case "ragnarosthefirelord": return HeroEnum.ragnarosthefirelord;
                 default: return HeroEnum.None;
@@ -304,6 +347,7 @@
                 case HeroEnum.thief: return TAG_CLASS.ROGUE;
                 case HeroEnum.warlock: return TAG_CLASS.WARLOCK;
                 case HeroEnum.warrior: return TAG_CLASS.WARRIOR;
+                case HeroEnum.demonhunter: return TAG_CLASS.DEMONHUNTER;
                 case HeroEnum.all: return TAG_CLASS.ALL;
                 default: return TAG_CLASS.INVALID;
             }
@@ -322,6 +366,7 @@
                 case "ROGUE": return HeroEnum.thief;
                 case "WARLOCK": return HeroEnum.warlock;
                 case "WARRIOR": return HeroEnum.warrior;
+                case "DEMONHUNTER": return HeroEnum.demonhunter;
                 default: return HeroEnum.None;
             }
         }
